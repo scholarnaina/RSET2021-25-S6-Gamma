@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Materials</title>
+<style>
+    html, body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        height:100%;
+        background: linear-gradient(to top, #000000, darkslategrey);
+
+    }
+    
+    
+    .container {
+        width: 50%;
+        margin: 50px auto;
+        color: white;
+        font-size: 30px;
+        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+    
+    .cs-subject {
+        cursor: pointer;
+        padding: 30px 50px;
+        background-color: #174aa1;
+        border: 2px solid #4b7d66;
+        border-radius: 8px;
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        color: #fff;
+        transition: background-color 0.3s ease;
+    }
+    
+    .cs-subject:hover {
+        background-color: #4b7d66;
+    }
+    
+    .cs-dropdown {
+        display: none;
+        margin-top: 20px;
+    }
+    
+    .cs-dropdown ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .cs-dropdown li {
+        padding: 15px 0;
+        text-align: center;
+        transition: background-color 0.3s ease;
+        font-size: 20px;
+        color: white;
+    }
+    
+    .cs-dropdown li:hover {
+        background-color: #4b7d66;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 35px;
+    }
+    
+    .intro-text {
+        text-align: center;
+        font-size: 24px;
+        margin-top: 20px;
+        display: block;
+        color: #333;
+        padding: 20px;
+        background-color: #baf2d2;
+        border-radius: 8px;
+    }
+    
+    #materialInfo {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #fff;
+        border: 2px solid #4b7d66;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 18px;
+        color: #4b7d66;
+    }
+    .redirect-button {
+        display: block;
+        width: 150px;
+        margin: auto;
+        margin-top: 100px ;
+        padding: 20px 30px;
+        background-color: #154696;
+        color: #fff;
+        text-align: center;
+        border: none;
+        font-size: 20px;
+        border-radius: 15px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    button :hover{
+        background-color: navy;
+    }
+    /* Your CSS styles remain unchanged */
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Heading for Materials -->
+    <h1 style="text-align: center;">Materials</h1>
+
+    <!-- Dropdown menu and form similar to previous page -->
+    <form id="subjectForm" method="post" action="{{ url_for('material') }}">
+        <input type="hidden" id="selectedSubject" name="selectedSubject" value="">
+        <div class="cs-subject" onclick="toggleDropdown()">Semester 6 Computer Science</div>
+        <div class="intro-text" id="introText">Find all the materials you need here to make your learning easier.</div>
+        <div class="cs-dropdown" id="csDropdown">
+            <ul>
+                <li onclick="selectSubject('Algorithm and Analysis Design')">Algorithm and Analysis Design</li>
+                <li onclick="selectSubject('Computer Graphics and Image Processing')">Computer Graphics and Image Processing</li>
+                <li onclick="selectSubject('Compiler Design')">Compiler Design</li>
+                <li onclick="selectSubject('Operating Systems')">Operating Systems</li>
+                <li onclick="selectSubject('Programming in Python')">Programming in Python</li>
+                <li onclick="selectSubject('Industrial Economics and Foreign Trade')">Industrial Economics and Foreign Trade</li>
+            </ul>
+        </div>
+    </form>
+
+    <!-- New section hi bye to display material URL and message -->
+    <button class="redirect-button" onclick="window.location.href='/dashboard'">Dashboard</button>
+</div>
+
+<script>
+    function toggleDropdown() {
+        var dropdown = document.getElementById("csDropdown");
+        var introText = document.getElementById("introText");
+        if (dropdown.style.display === "none") {
+            dropdown.style.display = "block";
+            introText.style.display = "none";
+        } else {
+            dropdown.style.display = "none";
+            introText.style.display = "block";
+        }
+    }
+
+    function selectSubject(subject) {
+        document.getElementById("selectedSubject").value = subject;
+
+        // Automatically submit the form when a subject is selected
+        document.getElementById("subjectForm").submit();
+    }
+</script>
+
+</body>
+</html>
