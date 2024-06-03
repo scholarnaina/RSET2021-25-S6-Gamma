@@ -1,0 +1,74 @@
+[
+
+    {
+      "question": "When learning new information, do you:",
+      "options": {
+        "1": "Prefer practical, hands-on examples and real-life applications?",
+        "0": "Enjoy exploring abstract theories and concepts?"
+      }
+    },
+  {
+      "question": "When completing tasks, are you more likely to:",
+      "options": {
+       "1": "Focus on specific details and follow a step-by-step approach?",
+        "0": "Emphasize the big picture and consider broader implications?"
+      }
+    },
+    {
+      "question": "When making decisions, do you tend to:",
+      "options": {
+       "1": "Rely on tangible facts, data, and past experiences?",
+        "0": "Trust intuition and consider potential possibilities and future outcomes?"
+    }
+    },
+    {
+      "question": "In a new environment, do you typically:",
+      "options": {
+      "1": "Notice and appreciate subtle changes or details in your surroundings?",
+       "0": "Focus on the overall atmosphere and general impressions of the environment?"
+      }
+    },
+    {
+      "question": "When recalling past events or experiences, do you:",
+      "options": {
+       "1": "Remember specific details, such as dates, names, and visual images?",
+        "0": "Recall general patterns or themes without necessarily remembering specific details?"
+      }
+    },
+    {
+      "question": "When faced with a problem, do you:",
+      "options": {
+      "1": "Seek practical solutions based on current resources and constraints?",
+       "0": "Generate creative possibilities and explore unconventional solutions?"
+      }
+    },
+    {
+      "question": "In your daily life, do you:",
+      "options": {
+      "1":  "Prefer following established routines and schedules?",
+       "0": "Enjoy spontaneity and adaptability, embracing changes as they occur?"
+      }
+    },
+    {
+      "question": "When engaging in hobbies or leisure activities, do you:",
+      "options": {
+       "1": "Prefer activities that involve tangible objects and physical involvement?",
+       "0": "Enjoy abstract or intellectual pursuits, such as reading, writing, or contemplating ideas?"
+      }
+    },
+    {
+      "question": "When focusing on a task or project, are you more likely to:",
+      "options": {
+       "1": "Maintain focus on one task at a time until completion?",
+       "0": "Enjoy multitasking or shifting between various activities to keep things interesting?"
+      }
+    },
+    {
+      "question": "In a classroom or training setting, do you:",
+      "options": {
+       "1": "Benefit from demonstrations, examples, and practical applications?",
+      "0": "Prefer discussions, debates, and theoretical explanations to explore ideas and concepts?"
+      }
+    }
+  ]
+  

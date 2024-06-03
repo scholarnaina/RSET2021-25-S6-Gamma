@@ -1,0 +1,72 @@
+[
+  {
+    "question": "When faced with a packed social calendar for the weekend, do you:",
+    "options": {
+      "1": "Feel invigorated and excited about the prospect of meeting new people and attending events?",
+      "0": "Prefer quieter activities or spending time alone to recharge after a busy week?"
+    }
+  },
+  {
+    "question": "In a group setting, are you more likely to:",
+    "options": {
+      "1":"Take the initiative to introduce yourself and start conversations with others?",
+      "0":"Wait for someone else to approach you before engaging in conversation?"
+    }
+  },
+  {
+    "question": "When working on a group project, do you:",
+    "options": {
+     "1":"Thrive on collaboration and enjoy brainstorming ideas with team members?",
+     "0": "Prefer working independently and focusing on your own contributions to the project?"
+    }
+  },
+  {
+    "question": "At a party or social event, do you typically:",
+    "options": {
+     "1": "Circulate and engage with multiple people, jumping from one conversation to another?",
+     "0": "Prefer staying in one place or with a small group of close friends throughout the event?"
+    }
+  },
+  {
+    "question": "When presented with an opportunity to try a new activity or join a new social group, do you:",
+    "options": {
+     "1": "Feel excited and eager to step out of your comfort zone and embrace the new experience?",
+     "0": "Feel hesitant or prefer sticking to familiar activities and social circles?"
+    }
+  },
+  {
+    "question": "In moments of silence during a conversation or group interaction, do you:",
+    "options": {
+     "1": "Feel comfortable and inclined to fill the silence with conversation or jokes?",
+    "0":  "Feel at ease with the silence and see it as an opportunity to reflect or observe quietly?"
+  }
+  },
+  {
+    "question": "How often do you find yourself attending social gatherings or events:",
+    "options": {
+     "1": "Frequently, as you enjoy being surrounded by people and engaging in social activities?",
+     "0": "Occasionally, as you prefer more solitary or intimate activities over large gatherings?"
+    }
+  },
+  {
+    "question": "When attending professional networking events, do you:",
+    "options": {
+    "1":  "Approach new contacts with ease, eager to build connections and expand your network?",
+     "0": "Feel apprehensive or uncomfortable initiating conversations with strangers in a professional setting?"
+    }
+  },
+  {
+    "question": "How do you typically react when you receive compliments or attention from others:",
+    "options": {
+    "1":  "Enjoy the recognition and feel energized by positive feedback and interaction?",
+    "0":  "Feel somewhat uncomfortable or prefer modesty, downplaying compliments?"
+    }
+  },
+  {
+    "question": "When planning a vacation or trip, do you:",
+    "options": {
+    "1":  "Prefer traveling with a group of friends or joining organized tours to meet new people?",
+     "0": "Prefer solo travel or intimate trips with close companions to focus on personal exploration and relaxation?"
+    }
+  }
+]

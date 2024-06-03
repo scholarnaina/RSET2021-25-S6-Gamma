@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survey</title>
+  <style>
+    html, body {
+      font-family: Arial, sans-serif;
+      background-color: darkslategrey;
+      background: linear-gradient(to top, #000000, darkslategrey);
+      height:100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .quiz-container {
+      max-width: 800px;
+      margin: 50px auto;
+      background-color:#343938;
+      padding: 20px;
+      border-radius: 50px;
+      box-shadow: 0px 2px 30px rgba(26, 223, 194, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color:rgb(255, 255, 255);
+      font-size: 50px;
+      font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+    }
+
+    p {
+      text-align: center;
+      font-family:Georgia, 'Times New Roman', Times, serif;
+      font-weight:bold;
+      color: white;
+      font-size:30px;
+      }
+
+    .question {
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color:#d3fff9;
+      border-radius: 30px;
+      font-size: larger;
+      font-family:Georgia, 'Times New Roman', Times, serif;
+    }
+    .question p {
+      color:#000000;
+      font-family:Georgia, 'Times New Roman', Times, serif;
+    }
+
+    label {
+      margin-left: 5px;
+    }
+
+    button {
+      display: block;
+      margin: 20px auto 0;
+      padding: 15px 30px;
+      background-color: #112e4e;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: larger;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    .insights-button {
+      display: block; /* Initially hide the button */
+      margin: 20px auto 0;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>PLP Survey</h1>
+    <p>Welcome to the survey! </p>
+    <form class="quiz-form" action="{{ url_for('survey') }}" method="post">
+        {% for i in range(0, questions|length) %}
+        <div class="question" id="question_{{ i + 1 }}">
+            <p>{{ questions[i].question }}</p>
+            {% for option_key, option_value in questions[i].options.items() %}
+            <div>
+                <input type="radio" id="q{{ i + 1 }}_{{ option_key }}" name="{{ i + 1 }}" value="{{ option_key }}">
+                <label for="q{{ i + 1 }}_{{ option_key }}">{{ option_value }}</label><br>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </form>
+    <button id="submitBtn" type="button">Submit</button>
+    <button id="showInsightsBtn" class="insights-button" onclick="window.location.href='/insight'" type="button">Show Insights</button>
+</div>
+
+<script>
+  document.getElementById('submitBtn').addEventListener('click', function() {
+    const form = document.querySelector('.quiz-form');
+    const formData = new FormData(form);
+    const answers = {};
+    
+    // Loop through each question in the form
+    for (let [key, option_key] of formData.entries()) {
+      // Store the value of each entry in the answers object
+      answers[key] = option_key;
+    }
+  
+    // Send answers to the backend using a POST request
+    fetch('{{ url_for('survey') }}', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(answers)
+    })
+    .then(response => {
+      if (response.ok) {
+        // Once the data is sent successfully, show the insights button after 5 seconds
+        //setTimeout(() => {
+          //document.getElementById('showInsightsBtn').style.display = 'block';
+        //}, 1); // 5000 milliseconds = 5 seconds
+        // Return the response for further handling
+        //return response.json();
+      }
+      throw new Error('Network response was not ok.');
+    })
+    .then(data => {
+      // Handle response from the backend (if needed)
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  });
+</script>
+</body>
+</html>

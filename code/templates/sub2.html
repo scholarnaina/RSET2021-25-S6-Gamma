@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Url</title>
+    <style>
+        html,body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            height:100%;
+            padding: 0;
+            background: linear-gradient(to top, #000000, darkslategrey);
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            color: white;
+        }
+
+        .url-container {
+            margin-top: 100px;
+            padding: 100px 300px;
+            background-color: #baf2d2;
+            border: 2px solid #4b7d66;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            color: #000000;
+        }
+
+        .url-container a {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .redirect-button {
+            display: block;
+            width: 150px;
+            margin: 50px auto;
+            padding: 30px 20px;
+            background-color: #144186;
+            color: #fff;
+            text-align: center;
+            border: none;
+            font-size: 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        {% for single_url in urls %}
+        <div class="url-container">
+            <p>Material URL: <a href="{{ single_url }}" target="_blank">{{ single_url }}</a></p>
+        </div>
+        {% endfor %}
+
+        <!-- Button to redirect to /material -->
+        <button class="redirect-button" onclick="window.location.href='/material'">Materials</button>
+    </div>
+
+</body>
+
+</html>

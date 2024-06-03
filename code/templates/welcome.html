@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Edu-AI</title>
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-image:url(https://i.ibb.co/JyjhqTR/background.jpg);
+            background-size:cover;
+            background-position:center;
+            }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(3, 75, 72, 0.3); /* Adjust the RGBA values and alpha (transparency) as needed */
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            position: relative; /* Add this line */
+            z-index: 1; /* Add this line */
+        }
+        .logo {
+            height: 200px;
+            opacity: 0; /* Initially set the opacity to 0 to make it invisible */
+            transition: opacity 3s ease; /* Apply a transition effect to the opacity property */
+
+        }
+        .content {
+            max-width: 800px;
+            margin:70px auto;
+            text-align: center;
+            color: rgb(255, 255, 255);
+            font-weight: bold;
+            position: relative; /* Add this line */
+            z-index: 1; 
+            opacity: 0; /* Initially set the opacity to 0 to make it invisible */
+            transition: opacity 3s ease;
+        }
+        .content.show {
+            opacity: 1; /* Set the opacity to 1 to make the content visible with the transition effect */
+        }
+        .content h1 {
+            color:rgb(255, 255, 255);
+            font-size: 70px;
+            margin-bottom: 30px;
+            font-family:cursive
+            
+        }
+        .content p {
+            font-size: 25px;
+            margin-bottom: 30px;
+            font-family:fantasy;
+            font-weight: 400;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            cursor: pointer;
+            position: relative; /* Add this line */
+            z-index: 1; 
+        }
+        .button {
+            background-color:#007bff;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 0 10px;
+            
+            border-radius: 20px;
+        }
+        .logocontainer{
+            display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+    height: 70px;
+    margin-left: 620px;
+    margin-top: 100px
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logocontainer">
+            <img src="https://i.ibb.co/NxxcgHc/logo.png" alt="Edu-AI Logo" class="logo">
+        </div>
+    </div>
+    <div class="content">
+        <h1>Welcome to Edu-AI</h1>
+        <p>Edu-AI is a personalized learning platform that uses AI to analyze your behavioral traits and recommend the best way for you to study.</p>
+        <button class="button" onclick="window.location.href='/login'">Log In</button>
+        <button class="button" onclick="window.location.href='/signup'">SignUp</button>
+    </div>
+</body>
+</html>
+<script>
+// Trigger the color change when the page loads
+window.onload = function() {
+// JavaScript to trigger the fade-in effect for the logo image
+var logo = document.querySelector('.logo'); // Select the logo image element
+logo.style.opacity = 1; // Set the opacity to 1 to make it visible with the transition effect;
+var contentElements = document.querySelectorAll('.content'); // Select all content elements
+    contentElements.forEach(function(element) {
+        element.classList.add('show'); // Add the 'show' class to each content element
+    });
+};
+</script>
