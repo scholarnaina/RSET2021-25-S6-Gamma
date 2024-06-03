@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Generator</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        .custom-toast {
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-container">
+        <h3>Data Structures</h3>
+        <h2>VoiceVIVA</h2>
+    </div>
+    <div class="start-container">
+        <img src="static/pics/ds icon.png" alt="Ds icon">
+        <h3>Answer Data Structure Questions</h3>
+        <p>Enhance your data structures skills with VoiceVIVA.</p>
+        <button id="startButton">Start</button>
+    </div>
+    <div class="main-container" style="display: none;">
+        <div class="title">
+            <span id="difficulty"><i class="fa-regular fa-lightbulb"></i>
+                <div id="diff"></div>
+            </span>
+            <div class="right-side">
+                <span id="questionNumber"></span>
+                <span id="timer"></span>
+            </div>
+        </div>
+        <div class="questionPart">
+            <h1 id="question"></h1>
+        </div>
+        <div class="blk" style="display: none;">
+            <label for="userAnswerlabel">Your Answer</label>
+            <i class="fa-solid fa-angle-down" id="arrowButton"></i>
+        </div>
+        <div id="userAnswer" style="display: none;"></div>
+        <br>
+        <div class="btn-container">
+            <button id="recordButton"><i class="fa-solid fa-microphone"></i>Answer</button>
+        </div>
+        <!-- <div id="feedback">
+            <button>Feedback</button>
+        </div>
+        <div id="feedbackPopup" class="feedback-popup">
+            <div class="feedback-popup-content">
+                <span class="close">&times;</span>
+                <div id="feedbackPopupContent"></div>
+            </div>
+        </div>  -->
+        <div class="nextBox">
+            <button id="nextButton">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <div id="timerMessage">Time's up! Click Next to proceed.</div>
+        </div>
+    </div>
+    <audio id="questionAudio" autoplay></audio>
+    <div id="endPage" style="display: none;">
+        <h1>Quiz Completed!</h1>
+        <h2>Your Final Score: <span id="finalScore"></span>/25</h2>
+        <h2>Total Time Taken: <span id="totalTime"></span></h2>
+        <p id="smallFeedback"></p>
+        <div id="expandedFeedbackContainer">
+            <div id="expandedFeedback">
+                <div class="horizontalDiv">View Detailed Feedback</div>
+                <i class="fa-solid fa-angle-down" id="expandArrow"></i>
+            </div>
+            <p id="personalizedFeedback"></p>
+        </div>
+        <div id="review">
+            <div class="horDiv">
+                <span>Review Questions</span>
+                <i class="fa-solid fa-angle-down" id="downArrow"></i>
+            </div>
+            <div id="questionReview" style="display: none;">
+                <div id="one">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+                <div id="two">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+                <div id="three">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+                <div id="four">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+                <div id="five">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+            </div>
+        </div>
+        <button id="retry"><i class="fa-solid fa-rotate-right"></i>Try Again</button>
+        <a href="/leaderBoard">View Leaderboard</a>
+
+    </div>
+    <div id="cheatingPage" style="display: none;">
+        <div class="start-container">
+            <h2>You cheated :(</h2>
+            <p>cheating is bad for health</p>
+            <button id="retry"><i class="fa-solid fa-rotate-right"></i>Try Again</button>
+            <a href="/landing">Home</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+            databaseURL: "YOUR_FIREBASE_DATABASE_URL",
+            projectId: "YOUR_FIREBASE_PROJECT_ID",
+            storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_FIREBASE_SENDER_ID",
+            appId: "YOUR_FIREBASE_APP_ID"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        import { getDatabase, set, get, query, update, remove, ref, child, orderByChild }
+            from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js"
+
+        const db = getDatabase();
+
+        var email = "{{ email }}";
+        console.log("Email:", email);
+
+        let questionIndex = 1;
+        let startTime = Date.now();
+        let score = [];
+        let k = 0;
+        let str = ['arrays', 'linked lists', 'stacks and queues', 'trees and graphs', 'hashing and heaps']
+        let improve = [];
+        let feedbackarr = ['#one', '#two', '#three', '#four', '#five']
+        let t = 0;
+
+        var startButton = document.querySelector("#startButton");
+        startButton.addEventListener('click', startTest);
+
+        var nextButton = document.querySelector("#nextButton");
+        nextButton.addEventListener('click', nextQuestion);
+
+        // var recordButton = document.querySelector("#recordButton");
+        // recordButton.addEventListener('click', recordAnswer);
+
+        // var feedButton = document.querySelector("#feedback");
+        // feedButton.addEventListener('click', openFeedbackPopup);
+
+        // var recordingState = 0;
+
+        // var closeButton = document.querySelector(".close");
+        // closeButton.addEventListener('click', closeFeedbackPopup);
+
+        var nextPage = document.querySelector("#nextPage");
+
+        var arrowButton = document.querySelector("#arrowButton");
+        arrowButton.addEventListener('click', toggleUserAnswer);
+
+        var timerInterval;
+
+        var expandArrow = document.getElementById("expandArrow");
+        var feedbackContainer = document.getElementById("expandedFeedbackContainer");
+
+        expandArrow.addEventListener("click", function () {
+            feedbackContainer.classList.toggle("show-feedback");
+        });
+
+
+        function toggleUserAnswer() {
+            var userAnswerDiv = document.getElementById('userAnswer');
+            var mainContainer = document.querySelector(".main-container");
+            var arrowIcon = document.querySelector("#arrowButton");
+
+            if (userAnswerDiv.style.display === 'none') {
+                // Display the user answer area below the blk div and above the buttons
+                userAnswerDiv.style.display = 'block';
+                arrowIcon.classList.add("rotate");
+                mainContainer.classList.add("extraExpand");
+            } else {
+                // Hide the user answer area
+                userAnswerDiv.style.display = 'none';
+                arrowIcon.classList.remove("rotate");
+                mainContainer.classList.remove("extraExpand");
+            }
+        }
+
+        function InsertData(ttime, tscore) {
+            const dbref = ref(db);
+
+            get(child(dbref, 'People')).then((students) => {
+                students.forEach(std => {
+                    let key = std.key;
+                    let value = std.val();
+                    console.log("i am key ", key)
+                    let total = value.Total;
+                    let i;
+                    total += tscore;
+                    if (total > 50) {
+                        i = 2;
+                    }
+                    else if (total > 100) {
+                        i = 3;
+                    }
+                    else if (total > 200) {
+                        i = 4;
+                    }
+                    else {
+                        i = 1;
+                    }
+                    console.log(total, i)
+                    if (value.Email == email) {
+                        update(ref(db, 'People/' + key), {
+                            Time: ttime,
+                            Score: tscore,
+                            Total: total,
+                            Badge: i
+                        })
+                            .then(() => {
+                                console.log("Data added successfully!")
+                            })
+                            .catch((error) => {
+                                alert(error)
+                            });
+                    }
+                })
+            })
+            // update(ref(db, 'People/' + username), {
+            //     Time: ttime,
+            //     Score: tscore
+            // })
+            //     .then(() => {
+            //         console.log("Data added successfully!")
+            //     })
+            //     .catch((error) => {
+            //         alert(error)
+            //     });
+
+        }
+        // window.addEventListener("blur", function () {
+        //     // Page lost focus (user switched tabs)
+        //     console.log("away")
+        // });
+
+        // window.addEventListener("focus", function () {
+        //     // Page regained focus (user returned to your tab)
+        //     console.log("here")
+        // });
+
+        window.addEventListener('DOMContentLoaded', function () {
+            // Display the Toastify message after page load
+            Toastify({
+                text: "Identity verified",
+                className: "custom-toast", // Apply your custom class here
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "linear-gradient(to right, #28a745, #218838)"
+            }).showToast();
+
+        });
+
+        let activeMessages = 0;
+        let hiddenMessages = 0;
+
+        function findData() {
+            const dbRef = ref(db);
+            let uname;
+
+            return get(child(dbRef, 'People'))
+                .then((students) => {
+                    students.forEach(std => {
+                        let key = std.key;
+                        let value = std.val();
+
+                        if (value.Email == email) {
+                            uname = value.Username
+                            name = value.Name
+                        }
+                    });
+                    console.log(uname, name)
+
+                    return uname; // Moved inside the then block
+                })
+                .catch(error => {
+                    console.error("Error fetching data: ", error);
+                });
+        }
+        findData()
+
+
+        function handleVisibilityChange() {
+            if (document.visibilityState === 'visible') {
+                activeMessages++;
+            }
+            else {
+                hiddenMessages++;
+                if (hiddenMessages === 1) {
+                    alert("This is an exam. Shifting to other tabs will not be allowed.");
+                } else if (hiddenMessages === 2) {
+                    alert("Due to multiple switching of tabs, the test is automatically terminated.");
+                    showCheatingPage()
+                }
+            }
+            document.title = document.visibilityState;
+            console.log("Active Messages: " + activeMessages);
+            console.log("Hidden Messages: " + hiddenMessages);
+            console.log(document.visibilityState);
+        }
+
+        function showCheatingPage() {
+            document.querySelector('.main-container').style.display = 'none';
+            document.getElementById('cheatingPage').style.display = 'block';
+        }
+
+        function startTest() {
+            document.querySelector('.start-container').style.display = 'none';
+            document.querySelector('.main-container').style.display = 'flex';
+            window.addEventListener("visibilitychange", handleVisibilityChange);
+            // Call the function to generate the first question
+            generateQuestion();
+        }
+
+
+
+        async function showEndPage() {
+            let formattedTotalTime
+            let totalScore
+            let totalTimeSeconds
+
+            window.removeEventListener("visibilitychange", handleVisibilityChange);
+            // Hide question container and show end page
+            document.querySelector('.main-container').style.display = 'none';
+            document.getElementById('endPage').style.display = 'block';
+
+            throwConfetti();
+
+            // Fetch final score and display it
+            await fetch('/final_score')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('finalScore').innerText = data.final_score;
+                    totalScore = data.final_score
+                })
+                .catch(error => console.error('Error:', error));
+
+            // Fetch total time and format it as minutes:seconds
+            await fetch('/stop_timer')
+                .then(response => response.json())
+                .then(data => {
+                    totalTimeSeconds = data.total_time_seconds;
+                    let minutes = Math.floor(totalTimeSeconds / 60);
+                    let seconds = totalTimeSeconds % 60;
+                    formattedTotalTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    // Set the formatted total time to the corresponding HTML element
+                    document.getElementById('totalTime').innerText = formattedTotalTime;
+                })
+                .catch(error => console.error('Error:', error));
+            analyseScores();
+            reviewQuestions();
+            InsertData(totalTimeSeconds, totalScore);
+        }
+
+
+        var recordingState = 0;
+        var recognition; // Declare recognition variable outside the function to access it globally
+        var recanswer;
+
+        var recordButton = document.querySelector("#recordButton");
+        recordButton.addEventListener('click', toggleRecording); // Use toggleRecording function instead of recordAnswer
+
+        function toggleRecording() {
+            if (recordingState === 0) {
+                startRecording();
+            } else {
+                stopRecording();
+            }
+        }
+
+        function createParagraph(text) {
+            const textContainer = document.getElementById('userAnswer');
+            let existingParagraph = textContainer.querySelector('p');
+            if (existingParagraph) {
+                existingParagraph.textContent = text;
+            } else {
+                const p = document.createElement('p');
+                p.textContent = text;
+                textContainer.appendChild(p);
+            }
+            var paragraphElement = textContainer.querySelector('p');
+
+            // Get the text content inside the paragraph element
+            recanswer = paragraphElement.textContent;
+
+        }
+
+        function startRecording() {
+            document.querySelector('label').innerText = "Your Answer";
+            document.getElementById('recordButton').textContent = "Listening";
+            animateDots(); // Start animating dots
+            recognition = new webkitSpeechRecognition();
+
+            // Set continuous to true
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = true;
+            recognition.continuous = true;
+
+            recognition.start();
+
+            recognition.onresult = function (event) {
+                var recanswer = ""
+                const transcript = Array.from(event.results)
+                    .map(result => result[0])
+                    .map(result => result.transcript)
+                    .join('');
+                createParagraph(transcript);
+            };
+
+
+            document.querySelector(".blk").style.display = 'block';
+            document.querySelector(".main-container").classList.add("expand");
+            recordingState = 1;
+        }
+
+
+        function stopRecording() {
+            clearInterval(dotAnimation); // Clear the dot animation interval
+            recognition.stop();
+            // Clear the recognition instance
+            if (/\bq\b/i.test(recanswer)) {
+                // Replace "q" with "queue" case insensitively
+                recanswer = recanswer.replace(/\bq\b/gi, "queue");
+            }
+
+            if (/\bdq\b/i.test(recanswer)) {
+                recanswer = recanswer.replace(/\bdq\b/gi, "dequeue");
+            }
+            if (/\brs\b/i.test(recanswer)) {
+                recanswer = recanswer.replace(/\brs\b/gi, "arrays");
+            }
+            if (/\brp\b/i.test(recanswer)) {
+                recanswer = recanswer.replace(/\brp\b/gi, "priority");
+            }
+            if (/i'll got them/i.test(recanswer)) {
+                // Replace "i'll got them" (case-insensitive) with "algorithm"
+                recanswer = recanswer.replace(/i'll got them/gi, "algorithm");
+            }
+            if (/\bdisplace\b/i.test(recanswer)) {
+                recanswer = recanswer.replace(/\bdisplace\b/gi, "displays");
+            }
+            if (/\brare\b/i.test(recanswer)) {
+                recanswer = recanswer.replace(/\brare\b/gi, "rear");
+            }
+            if (/\blost\b/i.test(recanswer)) {
+                recanswer = recanswer.replace(/\blost\b/gi, "last");
+            }
+            recognition = null;
+            evaluateAnswer(recanswer);
+            // Update the UI and recording state
+            document.getElementById('recordButton').disabled = true;
+            document.querySelector("#recordButton").style.backgroundColor = "#655f7a";
+            document.getElementById('recordButton').style.cursor = "not-allowed";
+            document.getElementById('recordButton').textContent = "Done";
+            recordingState = 0;
+        }
+
+
+        var dotAnimation;
+        function animateDots() {
+            var dots = document.getElementById('recordButton');
+            var dotCount = 0;
+            dotAnimation = setInterval(function () {
+                dotCount++;
+                if (dotCount > 3) dotCount = 1;
+                dots.textContent = "Listening" + ".".repeat(dotCount);
+            }, 500); // Blinking interval of 500 milliseconds
+        }
+
+
+        function evaluateAnswer(userAnswer) {
+
+            // If there is a user answer, proceed with the evaluation
+            fetch('/evaluate_answer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_answer: userAnswer })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // document.querySelector(feedbackarr[k]+' a').innerText = `Your Answer:${userAnswer}\nFeedback: ${data.feedback}\n Score: ${data.score}`;
+                    score[k] = data.mark;
+                    k++;
+                    document.getElementById('nextButton').style.display = 'block'; // Show next button
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function nextQuestion() {
+            // Add slide-out class to main-container
+            var mainContainer = document.querySelector('.main-container');
+            mainContainer.classList.remove('slide-in'); // Remove slide-in animation class
+            void mainContainer.offsetWidth; // Trigger reflow to restart animation
+            mainContainer.classList.add('slide-out');
+
+            // Wait for the slide-out animation to complete before generating the next question
+            setTimeout(function () {
+                generateQuestion();
+                questionIndex++;
+                let userAnswer = document.getElementById('userAnswer').innerText.trim(); // Get user's answer and remove leading/trailing whitespace
+
+                // Check if the user entered a response or not
+                if (userAnswer === '') {
+                    // If the user did not enter a response, set the mark to 0 in the score[] array
+                    score[k++] = 0;
+                }
+                console.log(k, score);
+                document.getElementById('userAnswer').innerText = ''; // Clear user answer textarea
+                if (document.getElementById('userAnswer').style.display !== 'none') {
+                    document.getElementById('userAnswer').style.display = 'none';
+                    document.querySelector("#arrowButton").classList.remove("rotate");
+                    document.querySelector(".main-container").classList.remove("extraExpand");
+                }
+                document.querySelector(".main-container").classList.remove("expand");
+                document.querySelector(".blk").style.display = 'none'; //hide the user answer for next question
+                //document.getElementById('feedbackPopupContent').innerText = ''; //Clear feedback area
+                document.getElementById('timerMessage').innerText = '';
+                document.querySelector('label').innerText = "Your Answer";
+                document.querySelector("#recordButton").style.backgroundColor = "#1b6ef3";
+                document.querySelector("#recordButton").innerHTML = '<i class="fa-solid fa-microphone"></i>Answer';
+                document.getElementById('question').innerText = '';
+                document.getElementById('questionNumber').innerText = '';
+                document.getElementById('timerMessage').style.display = 'none';
+                document.getElementById('recordButton').style.cursor = "pointer";
+                document.getElementById('nextButton').disabled = true; // Disable next button until the next question is generated
+                clearInterval(timerInterval);
+                document.getElementById('timer').innerText = '';
+                slideInMainContainer();
+            }, 1500); // Adjust this delay according to your animation duration
+        }
+
+
+        function generateQuestion() {
+            recanswer = '';
+            // Add slide-in class to main-container
+            var mainContainer = document.querySelector('.main-container');
+            mainContainer.classList.remove('slide-out'); // Remove previous animation class if exists
+            void mainContainer.offsetWidth; // Trigger reflow to restart animation
+            mainContainer.classList.add('slide-in');
+
+            fetch('/generate_question')
+                .then(response => response.json())
+                .then(data => {
+                    // Check if quiz is completed after generating each question
+                    if (questionIndex > 5) {
+                        showEndPage(); // Show end page if quiz is completed
+                        return;
+                    }
+                    document.getElementById('recordButton').disabled = false;
+                    document.getElementById('questionNumber').innerText = `${questionIndex}/5`;
+                    document.getElementById('question').innerText = data.question;
+                    document.getElementById('diff').innerText = data.difficulty + " question";
+                    if (data.difficulty === 'Easy') {
+                        document.querySelector("#difficulty").style.backgroundColor = "#C6EBC5";
+                        document.querySelector("#diff").style.color = "#0e4b3c";
+                        document.querySelector(".fa-lightbulb").style.color = "#0e4b3c";
+                    } else if (data.difficulty === 'Medium') {
+                        document.querySelector("#difficulty").style.backgroundColor = "#FFFBDA";
+                        document.querySelector("#diff").style.color = "#FAA300";
+                        document.querySelector(".fa-lightbulb").style.color = "#FAA300";
+                    } else if (data.difficulty === 'Hard') {
+                        document.querySelector("#difficulty").style.backgroundColor = "#FA7070";
+                        document.querySelector("#diff").style.color = "#8B322C";
+                        document.querySelector(".fa-lightbulb").style.color = "#8B322C";
+                    }
+                    // document.getElementById('feedbackPopupContent').innerText = '';
+                    document.getElementById('questionAudio').src = `/question_audio?${Date.now()}`;
+                    document.getElementById('questionAudio').play();
+                    startTime = Date.now(); // Reset timer
+                    startTimer(); // Start timer for 45 seconds
+                    document.getElementById('nextButton').disabled = false; // Enable next button after generating the question
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function startTimer() {
+            let timerElement = document.getElementById('timer');
+            let duration = 45; // Time duration in seconds
+            timerInterval = setInterval(function () {
+                let elapsed = Math.floor((Date.now() - startTime) / 1000);
+                let remainingSeconds = duration - elapsed;
+                let minutes = Math.floor(remainingSeconds / 60);
+                let seconds = remainingSeconds % 60;
+
+                let formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}s`;
+
+                if (remainingSeconds < 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('timerMessage').style.display = 'block';
+                    document.getElementById('timerMessage').innerText = 'Time`s up! Click Next to proceed';
+                    document.getElementById('recordButton').disabled = true;
+                    document.querySelector("#recordButton").style.backgroundColor = "#655f7a";
+                } else {
+                    timerElement.innerText = formattedTime;
+                }
+            }, 1000);
+        }
+
+        // function openFeedbackPopup() {
+        //     document.getElementById("feedbackPopup").style.display = "block";
+        //     // Set the content of the popup box
+        //     //document.getElementById("feedbackPopupContent").innerHTML = document.getElementById("feedback").innerHTML;
+        // }
+
+        // function closeFeedbackPopup() {
+        //     document.getElementById("feedbackPopup").style.display = "none";
+        // }
+
+        function slideInMainContainer() {
+            var mainContainer = document.querySelector('.main-container');
+            mainContainer.classList.remove('slide-out'); // Remove previous animation class if exists
+            void mainContainer.offsetWidth; // Trigger reflow to restart animation
+            mainContainer.classList.add('slide-in');
+        }
+
+
+        function analyseScores() {
+            for (let i = 0; i < 5; i++) {
+                if (score[i] < 2) {
+                    improve[t++] = str[i];
+                }
+            }
+            fetch('/improve_subjects', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ improve: improve })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Display personalized feedback message on the end page
+                    document.getElementById('personalizedFeedback').innerText = data.personalized_feedback;
+                    document.getElementById('smallFeedback').innerText = data.small_feedback;
+                    document.getElementById('endPage').style.display = 'block';
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function throwConfetti() {
+            (function frame() {
+                // launch a few confetti from the left edge
+                confetti({
+                    particleCount: 150,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                // and launch a few from the right edge
+                confetti({
+                    particleCount: 150,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+            }());
+        }
+
+        function reviewQuestions() {
+            fetch('/final_score')
+                .then(response => response.json())
+                .then(data => {
+                    let questionAnswers = data.question_answers;
+                    let questions_content = data.questions_content;
+                    let correct_answer = data.correct_answer;
+                    document.querySelector("#one .q").innerText = "1) " + questionAnswers[0][0];
+                    document.querySelector("#one .a").innerText = "Ans) " + `User Answer: ${questionAnswers[0][1].user_answer}\n` + `Feedback: ${questionAnswers[0][1].feedback}\n` + `Score: ${questionAnswers[0][1].score}`;
+                    document.querySelector("#two .q").innerText = "2) " + questionAnswers[1][0];
+                    document.querySelector("#two .a").innerText = "Ans) " + `User Answer: ${questionAnswers[1][1].user_answer}\n` + `Feedback: ${questionAnswers[1][1].feedback}\n` + `Score: ${questionAnswers[1][1].score}`;
+                    document.querySelector("#three .q").innerText = "3) " + questionAnswers[2][0];
+                    document.querySelector("#three .a").innerText = "Ans) " + `User Answer: ${questionAnswers[2][1].user_answer}\n` + `Feedback: ${questionAnswers[2][1].feedback}\n` + `Score: ${questionAnswers[2][1].score}`;
+                    document.querySelector("#four .q").innerText = "4) " + questionAnswers[3][0];
+                    document.querySelector("#four .a").innerText = "Ans) " + `User Answer: ${questionAnswers[3][1].user_answer}\n` + `Feedback: ${questionAnswers[3][1].feedback}\n` + `Score: ${questionAnswers[3][1].score}`;
+                    document.querySelector("#five .q").innerText = "5) " + questionAnswers[4][0];
+                    document.querySelector("#five .a").innerText = "Ans) " + `User Answer: ${questionAnswers[4][1].user_answer}\n` + `Feedback: ${questionAnswers[4][1].feedback}\n` + `Score: ${questionAnswers[4][1].score}`;
+                })
+        }
+
+        document.getElementById("downArrow").addEventListener("click", function () {
+            toggleQuestionReviewVisibility();
+        });
+
+        function toggleQuestionReviewVisibility() {
+            var questionReview = document.getElementById("questionReview");
+            var downArrow = document.getElementById("downArrow");
+
+            if (questionReview.style.display === "none") {
+                questionReview.style.display = "block";
+                downArrow.classList.add("rotate");
+            } else {
+                questionReview.style.display = "none";
+                downArrow.classList.remove("rotate");
+            }
+        }
+
+        document.querySelectorAll('.downArrowQues').forEach(item => {
+            item.addEventListener('click', event => {
+                toggleAnswerVisibility(event.target.parentElement); // Pass the parent element of the clicked arrow icon
+            })
+        });
+
+        // Function to toggle answer visibility
+        function toggleAnswerVisibility(questionElement) {
+            // Find the answer paragraph within the question element
+            var answer = questionElement.querySelector('.a');
+
+            // Toggle the display style of the answer paragraph
+            if (answer.style.display === 'none') {
+                answer.style.display = 'block'; // Show the answer
+            } else {
+                answer.style.display = 'none'; // Hide the answer
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Generator</title>
+    <link rel="stylesheet" href="static/stylesp.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="top-container">
+        <h3>Data Structures</h3>
+        <h2>VoiceVIVA</h2>
+    </div>
+    <div class="start-container">
+        <img src="static/pics/ds icon.png" alt="Ds icon">
+        <h3>Answer Data Structure Questions</h3>
+        <p>Enhance your data structures skills with VoiceVIVA.</p>
+        <button id="startButton">Start </button>
+    </div>
+    <div class="main-container" style="display: none;">
+        <div class="title">
+            <div class="right-side">
+                <span id="questionNumber"></span>
+            </div>
+        </div>
+        <div class="questionPart">
+            <h1 id="question"></h1>
+        </div>
+        <div class="blk" style="display: none;">
+            <label for="userAnswerlabel">Your Answer</label>
+            <i class="fa-solid fa-angle-down" id="arrowButton"></i>
+        </div>
+        <div id="userAnswer" style="display: none;"></div>
+        <br>
+        <div class="btn-container">
+            <button id="recordButton"><i class="fa-solid fa-microphone"></i>Answer</button>
+        </div>
+        <div id="feedback">
+            <button>Feedback</button>
+        </div>
+        <div id="feedbackPopup" class="feedback-popup">
+            <div class="feedback-popup-content">
+                <span class="close">&times;</span>
+                <div id="feedbackPopupContent"></div>
+            </div>
+        </div>
+        <div class="nextBox">
+            <button id="nextButton">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+    <audio id="questionAudio" autoplay></audio>
+    <div id="endPage" style="display: none;">
+        <h1>Quiz Completed!</h1>
+        <h2>Your Final Score: <span id="finalScore"></span>/50</h2>
+        <p id="smallFeedback"></p>
+        <div id="expandedFeedbackContainer">
+            <div id="expandedFeedback">
+                <div class="horizontalDiv">View Detailed Feedback</div>
+                <i class="fa-solid fa-angle-down" id="expandArrow"></i>
+            </div>
+            <p id="personalizedFeedback"></p>
+        </div>
+        <div id="review">
+            <div class="horDiv">
+                <span>Review Questions</span>
+                <i class="fa-solid fa-angle-down" id="downArrow"></i>
+            </div>
+            <div id="questionReview" style="display: none;">
+                <div id="one">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+                <div id="two">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+                <div id="three">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+                <div id="four">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+                <div id="five">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+                <div id="six">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+                <div id="seven">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+                <div id="eight">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+                <div id="nine">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+                <div id="ten">
+                    <p class="q"></p>
+                    <p class="a"></p>
+                </div>
+            </div>
+        </div>
+        <button id="retry"><i class="fa-solid fa-rotate-right"></i>Try Again</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+    <script type="module">
+
+
+        let questionIndex = 1;
+        let startTime = Date.now();
+        let score = [];
+        let k = 0;
+        let str = ['arrays', 'linked lists', 'stacks and queues', 'trees and graphs', 'hashing and heaps']
+        let improve = [];
+        let t = 0;
+        let totalQuestions = 10;
+
+        var startButton = document.querySelector("#startButton");
+        startButton.addEventListener('click', startTest);
+
+        var nextButton = document.querySelector("#nextButton");
+        nextButton.addEventListener('click', nextQuestion);
+
+        var feedButton = document.querySelector("#feedback");
+        feedButton.addEventListener('click', openFeedbackPopup);
+
+        var closeButton = document.querySelector(".close");
+        closeButton.addEventListener('click', closeFeedbackPopup);
+
+        var nextPage = document.querySelector("#nextPage");
+
+        var arrowButton = document.querySelector("#arrowButton");
+        arrowButton.addEventListener('click', toggleUserAnswer);
+
+        var expandArrow = document.getElementById("expandArrow");
+        var feedbackContainer = document.getElementById("expandedFeedbackContainer");
+
+        expandArrow.addEventListener("click", function () {
+            feedbackContainer.classList.toggle("show-feedback");
+        });
+
+
+        function toggleUserAnswer() {
+            var userAnswerDiv = document.getElementById('userAnswer');
+            var mainContainer = document.querySelector(".main-container");
+            var arrowIcon = document.querySelector("#arrowButton");
+
+            if (userAnswerDiv.style.display === 'none') {
+                // Display the user answer area below the blk div and above the buttons
+                userAnswerDiv.style.display = 'block';
+                arrowIcon.classList.add("rotate");
+                mainContainer.classList.add("extraExpand");
+            } else {
+                // Hide the user answer area
+                userAnswerDiv.style.display = 'none';
+                arrowIcon.classList.remove("rotate");
+                mainContainer.classList.remove("extraExpand");
+            }
+        }
+
+        function startTest() {
+            document.querySelector('.start-container').style.display = 'none';
+            document.querySelector('.main-container').style.display = 'flex';
+            // Call the function to generate the first question
+            generateQuestion();
+        }
+
+
+
+        async function showEndPage() {
+            let formattedTotalTime
+            let totalScore
+            let totalTimeSeconds
+            // Hide question container and show end page
+            document.querySelector('.main-container').style.display = 'none';
+            document.getElementById('endPage').style.display = 'block';
+
+            throwConfetti();
+
+            // Fetch final score and display it
+            await fetch('/final_score_p')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('finalScore').innerText = data.final_score.toFixed(2);;
+                    totalScore = data.final_score
+                })
+                .catch(error => console.error('Error:', error));
+
+            // Fetch total time and format it as minutes:seconds
+            analyseScores();
+            reviewQuestions();
+            // InsertData(totalTimeSeconds, totalScore);
+        }
+
+
+        var recordingState = 0;
+        var recognition; // Declare recognition variable outside the function to access it globally
+        var recanswer;
+
+        var recordButton = document.querySelector("#recordButton");
+        document.querySelector("#recordButton").style.backgroundColor = "#1b6ef3";
+        document.getElementById('recordButton').style.cursor = 'pointer';
+
+
+        recordButton.addEventListener('click', toggleRecording);
+
+        function toggleRecording() {
+            if (recordingState === 0) {
+                startRecording();
+            } else {
+                stopRecording();
+            }
+        }
+
+        function createParagraph(text) {
+            const textContainer = document.getElementById('userAnswer');
+            let existingParagraph = textContainer.querySelector('p');
+            if (existingParagraph) {
+                existingParagraph.textContent = text;
+            } else {
+                const p = document.createElement('p');
+                p.textContent = text;
+                textContainer.appendChild(p);
+            }
+            var paragraphElement = textContainer.querySelector('p');
+
+            // Get the text content inside the paragraph element
+            recanswer = paragraphElement.textContent;
+        }
+
+        function startRecording() {
+            document.querySelector('label').innerText = "Your Answer";
+            document.getElementById('recordButton').textContent = "Listening";
+            animateDots(); // Start animating dots
+            recognition = new webkitSpeechRecognition();
+
+            // Set continuous to true
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = true;
+            recognition.continuous = true;
+
+            recognition.start();
+
+            recognition.onresult = function (event) {
+                var recanswer = ""
+                const transcript = Array.from(event.results)
+                    .map(result => result[0])
+                    .map(result => result.transcript)
+                    .join('');
+                createParagraph(transcript);
+            };
+
+
+            document.querySelector(".blk").style.display = 'block';
+            document.querySelector(".main-container").classList.add("expand");
+            recordingState = 1;
+        }
+
+
+        function stopRecording() {
+            clearInterval(dotAnimation); // Clear the dot animation interval
+            recognition.stop();
+            if (/\bq\b/i.test(recanswer)) {
+                // Replace "q" with "queue" case insensitively
+                recanswer = recanswer.replace(/\bq\b/gi, "queue");
+            }
+
+            if (/\bdq\b/i.test(recanswer)) {
+                recanswer = recanswer.replace(/\bdq\b/gi, "dequeue");
+            }
+            if (/\brs\b/i.test(recanswer)) {
+                recanswer = recanswer.replace(/\brs\b/gi, "arrays");
+            }
+            if (/\brp\b/i.test(recanswer)) {
+                recanswer = recanswer.replace(/\brp\b/gi, "priority");
+            }
+            if (/i'll got them/i.test(recanswer)) {
+                // Replace "i'll got them" (case-insensitive) with "algorithm"
+                recanswer = recanswer.replace(/i'll got them/gi, "algorithm");
+            }
+            if (/\bdisplace\b/i.test(recanswer)) {
+                recanswer = recanswer.replace(/\bdisplace\b/gi, "displays");
+            }
+            if (/\brare\b/i.test(recanswer)) {
+                recanswer = recanswer.replace(/\brare\b/gi, "rear");
+            }
+            if (/\blost\b/i.test(recanswer)) {
+                recanswer = recanswer.replace(/\blost\b/gi, "last");
+            }
+            // Clear the recognition instance
+            recognition = null;
+            // Update the UI and recording state
+            evaluateAnswer(recanswer)
+            document.getElementById('recordButton').disabled = true;
+            document.querySelector("#recordButton").style.backgroundColor = "#655f7a";
+            document.getElementById('recordButton').style.cursor = "not-allowed";
+            document.getElementById('recordButton').textContent = "Done";
+            recordingState = 0;
+        }
+
+
+        var dotAnimation;
+        function animateDots() {
+            var dots = document.getElementById('recordButton');
+            var dotCount = 0;
+            dotAnimation = setInterval(function () {
+                dotCount++;
+                if (dotCount > 3) dotCount = 1;
+                dots.textContent = "Listening" + ".".repeat(dotCount);
+            }, 500); // Blinking interval of 500 milliseconds
+        }
+
+
+        function evaluateAnswer(userAnswer) {
+            var userAnswer = recanswer;
+            // If there is a user answer, proceed with the evaluation
+            fetch('/evaluate_answer_p', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_answer: userAnswer })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('feedbackPopupContent').innerText = `User Answer: ${data.user_answer}\n\n Feedback: Evaluation of the Answer:\n${data.feedback}.\n\nScore: ${data.overall_score}`;
+                    score[k++] = data.mark;
+                    document.getElementById('nextButton').style.display = 'block'; // Show next button
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function nextQuestion() {
+            // Add slide-out class to main-container
+            var mainContainer = document.querySelector('.main-container');
+            mainContainer.classList.remove('slide-in'); // Remove slide-in animation class
+            void mainContainer.offsetWidth; // Trigger reflow to restart animation
+            mainContainer.classList.add('slide-out');
+
+            // Wait for the slide-out animation to complete before generating the next question
+            setTimeout(function () {
+                // Check if all 10 questions have been answered
+                if (questionIndex > 10) {
+                    showEndPage(); // Show end page if all questions are answered
+                    return;
+                }
+
+                generateQuestion();
+                questionIndex++;
+                let userAnswer = document.getElementById('userAnswer').innerText.trim(); // Get user's answer and remove leading/trailing whitespace
+
+                // Check if the user entered a response or not
+                if (userAnswer === '') {
+                    // If the user did not enter a response, set the mark to 0 in the score[] array
+                    score[k++] = 0;
+                }
+                console.log(k, score);
+                document.getElementById('userAnswer').innerText = ''; // Clear user answer textarea
+                if (document.getElementById('userAnswer').style.display !== 'none') {
+                    document.getElementById('userAnswer').style.display = 'none';
+                    document.querySelector("#arrowButton").classList.remove("rotate");
+                    document.querySelector(".main-container").classList.remove("extraExpand");
+                }
+                document.querySelector(".main-container").classList.remove("expand");
+                document.querySelector(".blk").style.display = 'none'; //hide the user answer for next question
+                document.getElementById('feedbackPopupContent').innerText = ''; //Clear feedback area
+                document.querySelector('label').innerText = "Your Answer";
+                document.querySelector("#recordButton").innerHTML = '<i class="fa-solid fa-microphone"></i>Answer';
+                document.getElementById('question').innerText = '';
+                document.getElementById('questionNumber').innerText = '';
+                document.querySelector("#recordButton").style.backgroundColor = "#1b6ef3";
+                document.getElementById('recordButton').style.cursor = 'pointer';
+                document.getElementById('recordButton').disabled = false;
+                slideInMainContainer();
+            }, 1500); // Adjust this delay according to your animation duration
+        }
+
+        var qs;
+        var count=0;
+
+        function generateQuestion() {
+            recanswer = '';
+
+            // Add slide-in class to main-container
+            var mainContainer = document.querySelector('.main-container');
+            mainContainer.classList.remove('slide-out'); // Remove previous animation class if exists
+            void mainContainer.offsetWidth; // Trigger reflow to restart animation
+            mainContainer.classList.add('slide-in');    
+
+            fetch('/generate_question_p')
+                .then(response => response.json())
+                .then(data => {
+                    // Check if quiz is completed after generating each question
+                    if (questionIndex > 10) {
+                        showEndPage(); // Show end page if quiz is completed
+                        return;
+                    }
+                    document.getElementById('questionNumber').innerText = `${questionIndex}/10`;
+                    document.getElementById('question').innerText = data.question;
+                    qs = data.question;
+                    console.log(qs)
+                    document.getElementById('feedbackPopupContent').innerText = '';
+                    document.getElementById('questionAudio').src = `/question_audio_p?${Date.now()}`;
+                    document.getElementById('questionAudio').play(); 
+                })
+        }
+
+        function openFeedbackPopup() {
+            document.getElementById("feedbackPopup").style.display = "block";
+            // Set the content of the popup box
+            //document.getElementById("feedbackPopupContent").innerHTML = document.getElementById("feedback").innerHTML;
+        }
+
+        function closeFeedbackPopup() {
+            document.getElementById("feedbackPopup").style.display = "none";
+        }
+
+        function slideInMainContainer() {
+            var mainContainer = document.querySelector('.main-container');
+            mainContainer.classList.remove('slide-out'); // Remove previous animation class if exists
+            void mainContainer.offsetWidth; // Trigger reflow to restart animation
+            mainContainer.classList.add('slide-in');
+        }
+
+
+        function analyseScores() {
+            for (let i = 0; i < 10; i++) {
+                if (score[i] < 2) {
+                    improve[t++] = str[i];
+                }
+            }
+            fetch('/improve_subjects_p', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ improve: improve })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Display personalized feedback message on the end page
+                    document.getElementById('personalizedFeedback').innerText = data.personalized_feedback;
+                    document.getElementById('endPage').style.display = 'block';
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function throwConfetti() {
+            (function frame() {
+                // launch a few confetti from the left edge
+                confetti({
+                    particleCount: 150,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                // and launch a few from the right edge
+                confetti({
+                    particleCount: 150,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+            }());
+        }
+
+        function reviewQuestions() {
+            fetch('/final_score_p')
+                .then(response => response.json())
+                .then(data => {
+                    let questionAnswers = data.question_answers;
+                    document.querySelector("#one .q").innerText = "1) " + questionAnswers[0][0];
+                    document.querySelector("#one .a").innerText = "Ans) " + `User Answer: ${questionAnswers[0][1].user_answer}\n` + `Feedback: Evaluation of the Answer:\n${questionAnswers[0][1].feedback}.\n` + `Score: ${questionAnswers[0][1].score}`;
+                    document.querySelector("#two .q").innerText = "2) " + questionAnswers[1][0];
+                    document.querySelector("#two .a").innerText = "Ans) " + `User Answer: ${questionAnswers[1][1].user_answer}\n` + `Feedback: Evaluation of the Answer:\n${questionAnswers[1][1].feedback}.\n` + `Score: ${questionAnswers[1][1].score}`;
+                    document.querySelector("#three .q").innerText = "3) " + questionAnswers[2][0];
+                    document.querySelector("#three .a").innerText = "Ans) " + `User Answer: ${questionAnswers[2][1].user_answer}\n` + `Feedback: Evaluation of the Answer:\n${questionAnswers[2][1].feedback}.\n` + `Score: ${questionAnswers[2][1].score}`;
+                    document.querySelector("#four .q").innerText = "4) " + questionAnswers[3][0];
+                    document.querySelector("#four .a").innerText = "Ans) " + `User Answer: ${questionAnswers[3][1].user_answer}\n` + `Feedback: Evaluation of the Answer:\n${questionAnswers[3][1].feedback}.\n` + `Score: ${questionAnswers[3][1].score}`;
+                    document.querySelector("#five .q").innerText = "5) " + questionAnswers[4][0];
+                    document.querySelector("#five .a").innerText = "Ans) " + `User Answer: ${questionAnswers[4][1].user_answer}\n` + `Feedback: Evaluation of the Answer:\n${questionAnswers[4][1].feedback}.\n` + `Score: ${questionAnswers[4][1].score}`;
+                    document.querySelector("#six .q").innerText = "6) " + questionAnswers[5][0];
+                    document.querySelector("#six .a").innerText = "Ans) " + `User Answer: ${questionAnswers[5][1].user_answer}\n` + `Feedback: Evaluation of the Answer:\n${questionAnswers[5][1].feedback}.\n` + `Score: ${questionAnswers[5][1].score}`;
+                    document.querySelector("#seven .q").innerText = "7) " + questionAnswers[6][0];
+                    document.querySelector("#seven .a").innerText = "Ans) " + `User Answer: ${questionAnswers[6][1].user_answer}\n` + `Feedback: Evaluation of the Answer:\n${questionAnswers[6][1].feedback}.\n` + `Score: ${questionAnswers[6][1].score}`;
+                    document.querySelector("#eight .q").innerText = "8) " + questionAnswers[7][0];
+                    document.querySelector("#eight .a").innerText = "Ans) " + `User Answer: ${questionAnswers[7][1].user_answer}\n` + `Feedback: Evaluation of the Answer:\n${questionAnswers[7][1].feedback}.\n` + `Score: ${questionAnswers[7][1].score}`;
+                    document.querySelector("#nine .q").innerText = "9) " + questionAnswers[8][0];
+                    document.querySelector("#nine .a").innerText = "Ans) " + `User Answer: ${questionAnswers[8][1].user_answer}\n` + `Feedback: Evaluation of the Answer:\n${questionAnswers[8][1].feedback}.\n` + `Score: ${questionAnswers[8][1].score}`;
+                    document.querySelector("#ten .q").innerText = "10) " + questionAnswers[9][0];
+                    document.querySelector("#ten .a").innerText = "Ans) " + `User Answer: ${questionAnswers[9][1].user_answer}\n` + `Feedback: Evaluation of the Answer:\n${questionAnswers[9][1].feedback}.\n` + `Score: ${questionAnswers[9][1].score}`;
+                })
+        }
+
+        document.getElementById("downArrow").addEventListener("click", function () {
+            toggleQuestionReviewVisibility();
+        });
+
+        function toggleQuestionReviewVisibility() {
+            var questionReview = document.getElementById("questionReview");
+            var downArrow = document.getElementById("downArrow");
+
+            if (questionReview.style.display === "none") {
+                questionReview.style.display = "block";
+                downArrow.classList.add("rotate");
+            } else {
+                questionReview.style.display = "none";
+                downArrow.classList.remove("rotate");
+            }
+        }
+
+        document.querySelectorAll('.downArrowQues').forEach(item => {
+            item.addEventListener('click', event => {
+                toggleAnswerVisibility(event.target.parentElement); // Pass the parent element of the clicked arrow icon
+            })
+        });
+
+        // Function to toggle answer visibility
+        function toggleAnswerVisibility(questionElement) {
+            // Find the answer paragraph within the question element
+            var answer = questionElement.querySelector('.a');
+
+            // Toggle the display style of the answer paragraph
+            if (answer.style.display === 'none') {
+                answer.style.display = 'block'; // Show the answer
+            } else {
+                answer.style.display = 'none'; // Hide the answer
+            }
+        }
+    </script>
+</body>
+
+</html>

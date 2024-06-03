@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="static/loginStyle.css">
+    <!-- <link rel="stylesheet" href="./logo.css"> -->
+    <!-- <link rel="stylesheet" href="./stylefin1.css"> -->
+    <!-- <link rel="stylesheet" href="./color1.css"> -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="alert">Succesfully Registered</div>
+        <span class="icon-close">
+            <i class='bx bx-x'></i>
+        </span>
+        <div class="form-box register">
+            <h1>Registration</h1>
+            <form action="" method="post" id="People">
+                <div class="input-box">
+                    <input type="text" id="name" name="name" placeholder="Name" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box" id="registerEmail">
+                    <input type="text" id="newEmail" name="newEmail" placeholder="Email" required>
+                    <i class='bx bx-envelope'></i>
+                </div>
+                <div class="input-box" id="registerPassword">
+                    <input type="password" id="newPassword" name="newPassword" placeholder="Password" required>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox">I agree to the terms
+                        & conditions</label>
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <div class="login-link">
+                    <p>Already have an account? <a href="/login">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from
+            "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getDatabase, ref, push, set } from
+            "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword } from
+            "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+        // these are the build-in functions for firebase
+        const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+            databaseURL: "YOUR_FIREBASE_DATABASE_URL",
+            projectId: "YOUR_FIREBASE_PROJECT_ID",
+            storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_FIREBASE_SENDER_ID",
+            appId: "YOUR_FIREBASE_APP_ID"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+        const auth = getAuth(app);
+
+        let name = document.getElementById('name');
+        let newEmail = document.getElementById('newEmail');
+        let username = document.getElementById('username');
+        let newPassword = document.getElementById('newPassword');
+        let badge = 1; // Initialize badge to 1
+        let time = 0; // Initialize time to 0
+        let score = 0; // Initialize score to 0
+        let total = 0;
+        let People = document.getElementById('People');
+
+        let RegisterUser = evt => {
+            evt.preventDefault();
+            createUserWithEmailAndPassword(auth, newEmail.value,
+                newPassword.value)
+                .then((credentials) => {
+                    fetch('/signup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email: newEmail.value })
+                    })
+                        .then(response => response.text())
+                        .then(data => {
+                            console.log("User registered successfully:",
+                                credentials.user.uid);
+                            saveDataToDatabase(name.value, newEmail.value,
+                                username.value, badge, time, score, total);
+                            console.log('Response:', data);
+                            setTimeout(() => {
+                                window.location.href = '/uploading?filename=' + encodeURIComponent(name.value);
+                            }, 1500);
+
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                })
+                .catch((error) => {
+                    Toastify({
+                        text: error.message,
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
+                    }).showToast();
+                    console.error("Login error:", error);
+                    console.error("Registration error:", error);
+                });
+        };
+
+        const saveDataToDatabase = (nname, email, uname, nbadge,
+            ntime, nscore, ntotal) => {
+            const usersRef = ref(db, 'People');
+            const newUserRef = push(usersRef); // Should be changed to push a newuser
+            set(newUserRef, {
+                Name: nname,
+                Email: email,
+                Username: uname,
+                Badge: nbadge,
+                Time: ntime,
+                Score: nscore,
+                Total: ntotal
+            });
+        };
+
+        document.addEventListener("DOMContentLoaded", function () {
+            People.addEventListener('submit', RegisterUser);
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+</body>
+
+</html>
