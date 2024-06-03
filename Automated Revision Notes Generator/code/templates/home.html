@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="\static\home.css" />
+
+<body>
+  <h1 class="black_bg">REVISION NOTES GENERATOR</h1>
+  <div class="box"> 
+  <form action="/submit" method="post" enctype="multipart/form-data" class="black_bg wholeset" style="color:white">
+        <div class="dropdown">
+          <label for="module" id="label"><b>Select Module:</b></label>
+          <select name="module" id="module">
+            <option value="AllModules">All Modules</option>
+            <option value="Module1">Module 1</option>
+            <option value="Module2">Module 2</option>
+            <option value="Module3">Module 3</option>
+            <option value="Module4">Module 4</option>
+            <option value="Module5">Module 5</option>
+          </select>
+        </div>
+        <label for="document" class="upload"><b>Upload Notes Document here: </b></label>
+        <input type="file" name="document" id="document">
+        <br>
+        <div class="buttoncss"><a href="index.html" target="_blank" class="button"> <button type="submit" style="width: 200px; height: 50px; font-size: 20px;"><b>Summarize &#8594;</b></button></a></div>
+    </form>
+    </div>
+</body>    

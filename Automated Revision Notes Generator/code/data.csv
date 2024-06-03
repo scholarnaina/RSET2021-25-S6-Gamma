@@ -1,0 +1,38 @@
+OS,01,"['hardware', 'find', 'os', 'kernel', 'system', 'switch']",1
+OS,01,"['purpose', 'system', 'call', 'os']",1
+OS,01,"['structures', 'os', 'monolithic', 'systems', 'layered', 'systems', 'micro', 'kernel', 'modular', 'approach', '12', 'b', 'circumstances', 'would', 'user', 'better', 'using', 'time', 'sharing', 'system', 'pc', 'single', 'user', 'workstation']",1
+OS,01,"['main', 'advantage', 'microkernel', 'approach', 'system', 'design', 'user', 'programs', 'system', 'programs', 'interact', 'microkernel', 'architecture', 'b', 'differences', 'symmetric', 'asymmetric', 'multiprocessing', 'advantages', 'disadvantages', 'multiprocessor', 'systems']",1
+OS,01,"['OS', 'services']",1
+OS,01,"['steps', 'involved', 'system', 'boot']",1
+OS,01,"['elaborate', 'os', 'functions']",1
+OS,01,"['os', 'structures']",2
+OS,02,"['context', 'switching', 'considered', 'overhead', 'system']",1
+OS,02,"['inter', 'process', 'communication', 'implemented', 'using', 'shared', 'memory']",1
+OS,02,"['process', 'help', 'neat', 'diagram', 'different', 'states', 'process', 'b', 'new', 'process', 'created', 'unix', 'using', 'fork', 'system', 'call']",1
+OS,02,"['find', 'average', 'waiting', 'time', 'average', 'turnaround', 'time', 'processes', 'table', 'using', 'srt', 'scheduling', 'algorithm', 'priority', 'scheduling', 'algorithm', 'b', 'process', 'control', 'block', 'fields', 'used', 'process', 'control', 'block']",1
+OS,02,"['elaborate', 'concept', 'threads']",1
+OS,02,"['processes', 'arrive', 'system', 'time', '0', 'order', 'p1', 'p2', 'p3', 'process', 'p1', 'cpu', 'burst', 'ms', 'p2', 'cpu', 'burst', 'ms', 'p3', 'cpu', 'burst', 'ms', 'draw', 'gantt', 'chart', 'calculate', 'average', 'turnaround', 'time', 'average', 'waiting', 'time', 'processes', 'scheduling', 'policies', 'fcfs', 'sjf', 'non', 'pre', 'emptive', 'round', 'robin', 'time', 'quantum', '2ms']",2
+OS,02,"['elaborate', 'message', 'passing', 'systems', 'b', 'elaborate', 'different', 'types', 'schedulers']",1
+OS,03,"['resource', 'allocation', 'graph', 'deadlock', 'b', 'cycle', 'deadlock']",1
+OS,03,"['critical', 'section', 'requirement', 'satisfied', 'solution', 'critical', 'section', 'problem']",1
+OS,03,"['system', 'processes', 'p0', 'p4', 'resources', 'type', 'b', 'c', 'resource', 'type', 'instances', 'b', 'instances', 'c', 'instances', 'suppose', 'time', 't0', 'snapshot', 'system', 'taken', 'content', 'need', 'matrix', 'system', 'safe', 'state', 'safe', 'sequence', 'process', 'p1', 'requests', 'additional', 'instance', 'resource', 'type', 'instances', 'resource', 'type', 'c']",1
+OS,03,"['state', 'dining', 'philosopher', 'problem', 'solution', 'using', 'semaphores', 'b', 'mean', 'binary', 'semaphore', 'counting', 'semaphore', 'c', 'struct', 'implementation', 'wait', 'signal']",1
+OS,03,"['requirements', 'must', 'satisfied', 'solution', 'critical', 'section', 'problem']",2
+OS,03,"['semaphore', 'differentiate', 'counting', 'binary', 'semaphore']",2
+OS,03,"['readers', 'writers', 'problem', 'b', 'develop', 'solution', 'readers', 'writers', 'problem', 'using', 'semaphores', 'write', 'structure', 'reader', 'writer', 'processes', 'c', 'convert', 'resource', 'allocation', 'graph', 'wait', 'graph', 'detect', 'whether', 'deadlock', 'exists', 'system', 'justify', 'answer']",2
+OS,03,"['race', 'condition', 'example', 'b', 'snapshot', 'system', 'processes', 'p0', 'p1', 'p2', 'p3', 'p4', 'resource', 'types', 'b', 'c', 'total', 'many', 'instances', 'resource', 'type', 'system', 'apply', 'banker', 'algorithm', 'check', 'whether', 'system', 'safe', 'state']",3
+OS,04,"['reference', 'string', 'many', 'page', 'faults', 'occur', 'using', 'fcfs', 'cases', 'frame', 'b', 'frame']",1
+OS,04,"['differentiate', 'internal', 'external', 'fragmentations']",1
+OS,04,"['page', 'reference', 'string', 'find', 'number', 'page', 'faults', 'page', 'frames', 'using', 'page', 'replacement', 'algorithms', 'lru', 'fifo', 'optimal', 'b', 'steps', 'involved', 'handling', 'page', 'fault']",1
+OS,04,"['diagram', 'paging', 'done', 'tlb', 'b', 'memory', 'partitions', 'sizes', '100', 'kb', '500', 'kb', '200', 'kb', '300', 'kb', '600', 'kb', 'available', 'would', 'best', 'worst', 'first', 'fit', 'algorithms', 'place', 'processes', 'size', '212', 'kb', '417', 'kb', '112', 'kb', '426', 'kb', 'order', 'rank', 'algorithms', 'terms', 'efficiently', 'use', 'memory']",1
+OS,04,"['processes', 'size', '90k', '50k', '30k', '40k', 'variable', 'sized', 'partitions', 'memory', '20k', '100k', '40k', '200k', '10k', 'allocate', 'memory', 'using', 'first', 'fit', 'allocation', 'b', 'best', 'fit', 'allocation']",2
+OS,04,"['compare', 'features', 'paging', 'segmentation']",1
+OS,04,"['page', 'reference', 'string', 'system', 'frames', 'initially', 'empty', 'compute', 'page', 'faults', 'using', 'lru', 'page', 'replacement', 'algorithm', 'b', 'optimal', 'page', 'replacement', 'algorithm']",3
+OS,05,"['compare', 'sequential', 'access', 'direct', 'access', 'methods', 'storage', 'devices']",1
+OS,05,"['terms', 'disk', 'bandwidth', 'seek', 'time']",1
+OS,05,"['suppose', 'disk', 'drive', '5000', 'cylinders', 'numbered', '0', '4999', 'drive', 'currently', 'services', 'request', 'cylinder', '143', 'previous', 'request', 'cylinder', '125', 'queue', 'pending', 'requests', 'fifo', 'order', '86', '1470', '913', '1774', '948', '1509', '1022', '1750', '130', 'starting', 'current', 'position', 'total', 'distance', 'cylinders', 'disk', 'arm', 'moves', 'satisfy', 'pending', 'requests', 'algorithms', 'fcfs', 'ssft', 'scan', 'look', 'c', 'scan', 'b', 'use', 'access', 'matrix', 'protection', 'mechanism']",1
+OS,05,"['different', 'file', 'allocation', 'operations', 'advantages', 'disadvantages', 'b', 'file', 'types', 'file', 'operation', 'file', 'attributes']",1
+OS,05,"['disk', 'bandwidth']",2
+OS,05,"['file', 'attributes']",2
+OS,05,"['disk', 'queue', 'consisting', 'requests', 'cylinders', 'follows', '122', '98', '183', '37', '14', '15', '67', '124', 'let', 'r', 'w', 'head', 'position', 'cylinder', 'number', '37', 'draw', 'diagram', 'sstf', 'disk', 'scheduling', 'method', 'calculate', 'number', 'head', 'movements', 'required']",1
+OS,05,"['directory', 'implementation', 'b', 'file', 'allocation', 'method', 'advantages', 'disadvantages', 'method']",2

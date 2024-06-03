@@ -1,0 +1,103 @@
+body{
+    background-image: url("https://i.im.ge/2024/05/16/KT6FSJ.preview-2.webp");
+    margin:40px;
+    color:aliceblue;
+    padding-top:30px;
+     /* Prevent image tiling */
+    background-position: center;
+    background-attachment: fixed;
+}
+
+h1{
+    text-align:center;
+    padding-top: 0px;
+    font-family: lato, sans-serif;
+    font-weight: 0;
+    color:rgb(239, 241, 195);
+}
+
+#label{
+    padding-bottom:20px;
+}
+
+.dropdown{
+    text-align:center;
+    font-family: lato, sans-serif;
+    font-weight: 0;
+    color:rgb(239, 241, 195);
+    padding-top: 10px;
+    padding-bottom:20px;
+}
+
+.upload{
+    text-align:center;
+    font-family: lato, sans-serif;
+    font-weight: 0;
+    color:rgb(239, 241, 195);
+}
+
+.wholeset{
+    text-align:center;
+    font-size: larger;
+}
+
+.buttoncss{
+    font-size: 16px;
+    padding-left: 0px;
+    padding-top: 20px;
+    padding-bottom: 0px;
+    text-align: center;
+}
+
+.button{
+    /* Style the anchor tag to look like a button */
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none; /* Remove underline from link */
+    cursor: pointer; /* Indicate clickable behavior */
+}
+
+#revision{
+    
+    font-family: lato, sans-serif;
+    font-weight: 0;
+    color:rgb(239, 241, 195);
+}
+
+.notes{
+    font-size: 16px;
+    padding-left: 20px;
+}
+
+
+.white_bg{
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.5);
+    border: 0.5px solid #ccc;
+    border-radius: 2px;
+}
+
+.black_bg{
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.5);
+    border: 0.5px solid #ccc;
+    padding-top:20px;
+    padding-bottom:20px;
+    border-radius: 0.5px;
+}
+
+.box{
+    padding-top: 100px;
+}
+
+.black_bg_4_rev{
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.5);
+    border: 0.5px solid #ccc;
+    padding-top:20px;
+    padding-bottom:20px;
+    border-radius: 0.5px;
+}
