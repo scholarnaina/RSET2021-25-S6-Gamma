@@ -1,0 +1,18 @@
+<!doctype html>
+<link rel="stylesheet" href="\static\home.css" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1 class="black_bg">REVISION NOTES GENERATOR</h1>
+    <form action="/generate_pdf" method="post">
+    <div id="summary" class="notes black_bg_4_rev">
+        <p>{{ summary | safe }}</p>
+    <button type="submit">Generate PDF</button>
+</div>
+</form>
+   
+</body>
+</html>
