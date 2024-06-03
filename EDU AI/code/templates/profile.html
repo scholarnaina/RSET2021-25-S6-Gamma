@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+</head>
+
+    <img src="https://i.ibb.co/NxxcgHc/logo.png" class="logo" alt="Edu-AI-Logo">
+
+<body>
+    
+    <h1>All About You !
+    </h1>
+    <div>
+        <h2>User Profile</h2>
+        <p><strong>Username:</strong> {{ username }}</p>
+        <p><strong>Name:</strong> {{ name }}</p>
+        <p><strong>Phone Number:</strong> {{ phone_number }}</p>
+    </div>
+</body>
+</html>
+<style>
+    .logo {
+        width: 120px; /* Or any desired width */
+        height: auto; /* Ensures aspect ratio is maintained */
+        justify-content:center;
+        margin-left: 650px;
+        margin-top: 30px;
+    } 
+html, body {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    height:100%;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to top, #000000, darkslategrey);
+    
+}
+
+h1 {
+    text-align: center;
+    margin-top: 50px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 70px;
+}
+h2 {
+    text-align: center;
+    margin-top: 10px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 50px;
+}
+
+div {
+    width: 500px;
+    height:400px;
+    margin: 20px auto;
+    margin-top: 50px;
+    background-color: #3a3a3a;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    transition: transform 0.5s ease;
+}
+div:hover{
+    transform: scale(1.1); /* Zoom out effect */
+}
+
+p {
+    margin: 10px 0;
+    color: white;
+    padding: 20px;
+    font-size: 25px;
+}
+
+strong {
+    font-weight: bold;
+}
+</style>

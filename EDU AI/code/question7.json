@@ -1,0 +1,73 @@
+[
+    {
+      "question": "When planning a project, do you:",
+      "options": {
+       "1": "Prefer to establish clear deadlines and milestones to track progress?",
+       "0": "Like to keep the schedule flexible and adapt as needed?"
+      }
+    },
+    {
+      "question": "In your daily routine, are you more likely to:",
+      "options": {
+       "1": "Stick to a predetermined schedule for tasks and activities?",
+       "0": "Enjoy spontaneity and prefer to go with the flow?"
+      }
+    },
+    {
+      "question": "When faced with a decision, do you:",
+      "options": {
+       "1": "Feel more comfortable after considering all possible outcomes and weighing the pros and cons?",
+       "0": "Trust your gut instinct and make quick decisions based on intuition?"
+      }
+    },
+    {
+      "question": "How do you approach completing tasks:",
+      "options": {
+       "1": "Prefer to finish one task before starting another?",
+       "0": "Like to juggle multiple tasks at once to keep things interesting?"
+      }
+    },
+    {
+      "question": "When receiving information or instructions, do you:",
+      "options": {
+       "1": "Prefer clear, step-by-step instructions to follow?",
+       "0": "Enjoy interpreting information and figuring things out as you go?"
+      }
+    },
+    {
+      "question": "In group settings, are you more likely to:",
+      "options": {
+      "1":  "Take charge and organize the group to ensure tasks are completed efficiently?",
+      "0":  "Let others take the lead and contribute ideas as needed?"
+      }
+    },
+    {
+      "question": "When setting goals for yourself, do you:",
+      "options": {
+      "1":  "Establish specific, measurable goals with deadlines for achievement?",
+      "0":  "Prefer to have general goals and adapt them based on circumstances?"
+      }
+    },
+    {
+      "question": "How do you handle unexpected changes or disruptions to your plans:",
+      "options": {
+       "1": "Try to quickly find a solution and get back on track?",
+       "0": "Embrace the change and see it as an opportunity for something new?"
+      }
+    },
+    {
+      "question": "When working on a team project, do you:",
+      "options": {
+       "1": "Prefer roles and responsibilities to be clearly defined?",
+       "0": "Enjoy collaborating and sharing responsibilities with others?"
+      }
+    },
+    {
+      "question": "When evaluating your own performance or progress, do you:",
+      "options": {
+       "1": "Set high standards for yourself and strive for perfection?",
+       "0": "Focus on progress rather than perfection and celebrate achievements along the way?"
+      }
+    }
+  ]
+  

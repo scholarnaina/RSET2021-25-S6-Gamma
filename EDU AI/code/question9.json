@@ -1,0 +1,227 @@
+[
+  {
+      "question": "When trying to understand a new concept, do you:",
+      "options": {
+          "1": "Find it helpful to see visual representations or diagrams?",
+          "2": "Prefer listening to explanations or lectures?",
+          "3": "Prefer reading written explanations or text-based materials?",
+          "4": "Benefit from hands-on demonstrations or practical experiences?"
+      }
+  },
+  {
+      "question": "When recalling information, do you:",
+      "options": {
+          "1": "Picture images or diagrams in your mind?",
+          "2": "Remember conversations or lectures you've heard?",
+          "3": "Rely on written notes or text you've read?",
+          "4": "Recall physical sensations or experiences?"
+      }
+  },
+  {
+      "question": "When studying for an exam, do you:",
+      "options": {
+          "1": "Use flashcards or mind maps to visualize information?",
+          "2": "Prefer discussing topics with others or listening to recordings?",
+          "3": "Write out summaries or review written notes?",
+          "4": "Act out scenarios or physically interact with study materials?"
+      }
+  },
+  {
+      "question": "When solving a problem, do you:",
+      "options": {
+          "1": "Visualize possible solutions in your mind?",
+          "2": "Talk through the problem out loud or discuss it with others?",
+          "3": "Write out the steps or create a written plan?",
+          "4": "Try different approaches or physically manipulate objects?"
+      }
+  },
+  {
+      "question": "When learning a new skill, do you:",
+      "options": {
+          "1": "Watch demonstrations or instructional videos?",
+          "2": "Prefer listening to instructions or following verbal cues?",
+          "3": "Read manuals or written instructions to learn the steps?",
+          "4": "Practice the skill hands-on until you get it right?"
+      }
+  },
+  {
+      "question": "When expressing your thoughts or ideas, do you:",
+      "options": {
+          "1": "Use visual aids or illustrations to enhance your explanations?",
+          "2": "Enjoy discussing them verbally or giving presentations?",
+          "3": "Prefer writing them down or creating written outlines?",
+          "4": "Use gestures or physical demonstrations to convey meaning?"
+      }
+  },
+  {
+      "question": "When exploring a new place, do you:",
+      "options": {
+          "1": "Take in the sights and enjoy the visual aspects of the surroundings?",
+          "2": "Engage in conversations with locals or listen to tour guides?",
+          "3": "Read guidebooks or maps to understand the history and details?",
+          "4": "Explore by touching and interacting with objects or surroundings?"
+      }
+  },
+  {
+      "question": "When learning a new language, do you:",
+      "options": {
+          "1": "Use visual aids such as flashcards or videos to learn vocabulary?",
+          "2": "Prefer listening to native speakers or audio recordings?",
+          "3": "Read books or written materials to understand grammar and structure?",
+          "4": "Practice speaking and interacting with others in the language?"
+      }
+  },
+  {
+      "question": "When giving directions to someone, do you:",
+      "options": {
+          "1": "Draw a map or provide visual references?",
+          "2": "Explain verbally using landmarks and auditory cues?",
+          "3": "Write down step-by-step instructions for them to follow?",
+          "4": "Act out the directions or physically guide them?"
+      }
+  },
+  {
+      "question": "When remembering a past event, do you:",
+      "options": {
+          "1": "Visualize the scenes or images from the event?",
+          "2": "Recall the sounds and voices associated with the event?",
+          "3": "Reflect on written accounts or notes you've taken about the event?",
+          "4": "Relive the physical sensations or experiences?"
+      }
+  },
+  {
+      "question": "When learning a new dance move, do you:",
+      "options": {
+          "1": "Watch demonstrations of the moves before attempting them?",
+          "2": "Prefer listening to the rhythm and following the beat?",
+          "3": "Read instructions or watch tutorials to understand the steps?",
+          "4": "Practice the moves repeatedly until you feel the muscle memory?"
+      }
+  },
+  {
+      "question": "When trying to understand a complex concept, do you:",
+      "options": {
+          "1": "Create visual diagrams or mind maps to map out the connections?",
+          "2": "Prefer discussing it with others to hear different perspectives?",
+          "3": "Read textbooks or articles to delve deeper into the details?",
+          "4": "Act out scenarios or use props to simulate real-life situations?"
+      }
+  },
+  {
+      "question": "When remembering a phone number, do you:",
+      "options": {
+          "1": "Picture the numbers visually in your mind?",
+          "2": "Repeat it out loud to yourself to remember?",
+          "3": "Write it down to help retain the information?",
+          "4": "Associate the numbers with a physical sensation or action?"
+      }
+  },
+  {
+      "question": "When trying to memorize a speech or presentation, do you:",
+      "options": {
+          "1": "Create visual cues or slides to guide you through the key points?",
+          "2": "Practice reciting it aloud to hear the flow of the words?",
+          "3": "Write out the entire speech word for word to internalize it?",
+          "4": "Act out the speech or physically engage with the content?"
+      }
+  },
+  {
+      "question": "When learning to cook a new recipe, do you:",
+      "options": {
+          "1": "Look at pictures or videos of the finished dish for inspiration?",
+          "2": "Listen to instructions or watch a video demonstration?",
+          "3": "Read the recipe instructions carefully before starting?",
+          "4": "Use your hands to feel the textures and consistencies of the ingredients?"
+      }
+  },
+  {
+      "question": "When learning a new sport or physical activity, do you:",
+      "options": {
+          "1": "Watch demonstrations or videos of the technique?",
+          "2": "Listen to verbal instructions or coaching cues?",
+          "3": "Read about the rules and strategies before attempting to play?",
+          "4": "Practice the movements repeatedly until they feel natural?"
+      }
+  },
+  {
+      "question": "When assembling furniture or following DIY instructions, do you:",
+      "options": {
+          "1": "Refer to visual diagrams or assembly illustrations?",
+          "2": "Listen to audio guides or instructional podcasts?",
+          "3": "Read the written instructions carefully step by step?",
+          "4": "Use your hands to feel the pieces and how they fit together?"
+      }
+  },
+  {
+      "question": "When learning a new musical instrument, do you:",
+      "options": {
+          "1": "Watch tutorial videos or observe others playing the instrument?",
+          "2": "Listen to recordings or music samples to understand the sound?",
+          "3": "Read sheet music or musical notation to learn the notes and rhythms?",
+          "4": "Practice the fingerings and techniques through physical repetition?"
+      }
+  },
+  {
+      "question": "When navigating through a new city or location, do you:",
+      "options": {
+          "1": "Look at maps or use GPS visualizations on your phone?",
+          "2": "Listen to GPS directions or audio guides for navigation?",
+          "3": "Read street signs and landmarks to guide your route?",
+          "4": "Use your sense of direction and spatial awareness to find your way?"
+      }
+  },
+  {
+      "question": "When learning about history or historical events, do you:",
+      "options": {
+          "1": "Watch documentaries or historical reenactments on television?",
+          "2": "Listen to podcasts or audiobooks narrating historical accounts?",
+          "3": "Read historical texts or biographies to understand the context and details?",
+          "4": "Visit historical sites or museums to experience the artifacts firsthand?"
+      }
+  },
+  {
+      "question": "When trying to understand a scientific concept, do you:",
+      "options": {
+          "1": "Watch visual simulations or animations to grasp the concepts?",
+          "2": "Prefer listening to lectures or discussions on the topic?",
+          "3": "Read scientific articles or textbooks to gain a detailed understanding?",
+          "4": "Perform experiments or hands-on activities to see the principles in action"
+      }
+  },
+  {
+      "question": "When recalling a childhood memory, do you:",
+      "options": {
+          "1": "Visualize the scenes or specific moments from the memory?",
+          "2": "Recall the voices or conversations from that time?",
+          "3": "Reflect on diary entries or written accounts you may have kept?",
+          "4": "Remember the physical sensations or emotions experienced during the event?"
+      }
+  },
+  {
+      "question": "When preparing for a presentation, do you:",
+      "options": {
+          "1": "Create visual slides or multimedia presentations to support your points?",
+          "2": "Practice delivering the presentation aloud to refine your delivery?",
+          "3": "Write out a detailed script or outline to structure your presentation?",
+          "4": "Rehearse gestures or body language to enhance your communication?"
+      }
+  },
+  {
+      "question": "When learning about a cultural tradition or practice, do you:",
+      "options": {
+          "1": "Look at photographs or videos depicting the tradition in action?",
+          "2": "Listen to oral histories or narratives passed down through generations?",
+          "3": "Read about the tradition's origins and significance in written accounts?",
+          "4": "Participate in cultural events or rituals to experience it firsthand?"
+      }
+  },
+  {
+      "question": "When exploring a new hobby or interest, do you:",
+      "options": {
+          "1": "Watch online tutorials or demonstrations to learn the basics?",
+          "2": "Seek out podcasts or audiobooks discussing the hobby and its techniques?",
+          "3": "Read books or articles to gain a deeper understanding of the hobby's history and theory?",
+          "4": "Dive into hands-on activities or projects to develop your skills?"
+      }
+  }
+]

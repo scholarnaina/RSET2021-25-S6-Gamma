@@ -1,0 +1,73 @@
+[
+    {
+      "question": "When making important decisions, do you:",
+      "options": {
+       "1": "Rely on logic, reasoning, and objective analysis?",
+       "0": "Consider personal values, emotions, and the impact on others?"
+      }
+    },
+    {
+      "question": "When faced with a challenging problem, are you more likely to:",
+      "options": {
+       "1": "Analyze the situation logically and search for the most efficient solution?",
+       "0": "Consider various perspectives and empathize with those involved before deciding on a solution?"
+      }
+    },
+    {
+      "question": "In conflicts or disagreements, do you tend to:",
+      "options": {
+      "1":  "Focus on facts and seek a resolution based on logical arguments?",
+       "0": "Prioritize harmony and consider the feelings and perspectives of all parties involved?"
+      }
+    },
+    {
+      "question": "How do you typically react to constructive criticism or feedback:",
+      "options": {
+        "1":  "Appreciate feedback that is logical and offers practical solutions for improvement?",
+       "0": "Value feedback that acknowledges personal feelings and the impact of actions on others?"
+      }
+    },
+    {
+      "question": "When discussing ideas or concepts, do you:",
+      "options": {
+       "1": "Value objective analysis and prefer to focus on facts and evidence?",
+       "0": "Consider personal experiences and emotions as valid factors in the discussion?"
+      }
+    },
+    {
+      "question": "In a debate or argument, do you tend to:",
+      "options": {
+       "1": "Present logical arguments and factual evidence to support your position?",
+       "0": "Appeal to personal values and emotions to strengthen your argument?"
+      }
+    },
+    {
+      "question": "When organizing your tasks or schedule, do you:",
+      "options": {
+       "1": "Prefer structured plans and prioritize tasks based on logical priority?",
+        "0": "Embrace flexibility and adaptability, allowing room for spontaneity and changes in plans?"
+      }
+    },
+    {
+      "question": "When evaluating ideas or proposals, do you:",
+      "options": {
+       "1": "Provide feedback based on logical analysis and potential outcomes?",
+       "0": "Consider the emotional impact of feedback and provide encouragement along with constructive criticism?"
+      }
+    },
+    {
+      "question": "In leadership roles, do you tend to:",
+      "options": {
+       "1": "Focus on setting clear objectives and implementing efficient strategies to achieve goals?",
+       "0": "Emphasize team morale, individual growth, and fostering positive relationships within the team?"
+      }
+    },
+    {
+      "question": "When learning new concepts or skills, do you:",
+      "options": {
+       "1": "Prefer structured learning environments with clear objectives and logical explanations?",
+        "0": "Enjoy exploring diverse perspectives and engaging in discussions to deepen understanding?"
+      }
+    }
+  ]
+  
