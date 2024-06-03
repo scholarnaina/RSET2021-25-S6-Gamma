@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <title>Product Comparator</title>
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="icon" href="C:\Users\Tom\Documents\Programs\Product Comparator\Product-Comparator\Frontend\logo.png" type="image/x-icon">
+
+    <style>
+        /* General Styles */
+        .logo{
+            position:center;
+            object-fit:cover;
+            display: block;
+            width: 20%;
+            margin-right:auto;
+            margin-left: auto;
+        }
+        body {
+            background-color: #f8f9fa;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        /* Table Styles */
+        .table {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+
+        td {
+            vertical-align: middle;
+        }
+
+        td img {
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        td img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Form Styles */
+        .form-control {
+            width: 100%;
+        }
+
+        .select2-container {
+            width: 100%;
+        }
+
+        .select2-container--default .select2-selection--single {
+            height: 38px;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 40px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 40px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            margin-top: 0;
+        }
+
+        /* Button Styles */
+        .compare-btn {
+            background-color: #343a40;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .compare-btn:hover {
+            background-color: #2e3236;
+        }
+
+        .price-btn {
+            background-color: #343a40;
+            color: #ffffff;
+            border-radius: 5px;
+            padding: 10px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Heading Styles */
+        .heading {
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-shadow: 5px 5px 100px rgba(255,255,255, 0.5);
+        }
+
+        /* Result Containers */
+        .result-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+            display: block; 
+            border: 1px solid #ccc;
+            word-wrap: break-word;
+        }
+        #conclusion {
+            margin: 0 auto;
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 50px;
+        }
+
+        .result-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .result-text {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+/* Adjust the margin for the row containing result containers */
+.result-section {
+    margin-top: 10px; /* You can adjust this value to your preference */
+}
+.background-container {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place the container behind other content */
+}
+
+.background-container::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/static/backgroundimgproductcomp.png'); /* URL of your background image  */
+    background-size: cover;
+    background-position: center;
+    filter: blur(5px); /* Adjust the blur radius as needed */
+    z-index: -1; /* Ensure the blur effect is behind other content */
+}
+
+</style>
+
+<style>
+    .pre-wrap {
+        white-space: pre-wrap;
+        width: 50%; /* Adjust the width as needed */
+        max-width: 100px; /* Set a maximum width to prevent excessive stretching */
+        margin: auto; /* Center the container */
+    /*    padding: 10px;  Add padding for better readability */
+    /*    border: 1px solid #ccc;  Add border for better visualization */
+    /*    border-radius: 5px;  Add border radius for a rounded appearance */
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    .sizelim {
+        overflow-x: auto; /* Enables horizontal scrolling if needed */
+        word-wrap: break-word; /* Breaks long words to prevent horizontal overflow */
+        white-space: pre-wrap; /* Preserves formatting and wraps text */
+    }
+
+</style>
+
+</head>
+<body>
+<div class="background-container">
+<div class="container">
+    <img src="{{ url_for('static', filename='logo-removebg.png') }}" class="logo">
+    <h1 class="display-5 text-center heading">Product Comparator</h1>
+    <!-- Add an ID to the form -->
+        <div class="row mt-5">
+            <div class="col-md-6 result-container" id="price1">
+                <div class="result-title">Price for Product 1</div>
+                <div class="result-text" id="result1-text">
+                    {{ price1 | safe}}
+                </div>
+            </div>
+            <div class="col-md-6 result-container" id="price2">
+                <div class="result-title">Price for Product 2</div>
+                <div class="result-text" id="result2-text">
+                    {{price2 | safe}}
+                </div>
+            </div>
+        </div>
+        <!-- Comparison result containers -->
+        <div class="row mt-5" id="resultContainer">
+            <div class="col-md-6 result-container" id="result1">
+                <div class="result-title">Result for Product 1</div>
+                   <pre class="sizelim"> {{ info1 | safe }} </pre>
+            </div>
+        
+            <div class="col-md-6 result-container" id="result2">
+                <div class="result-title">Result for Product 2</div>
+                  <pre class="sizelim">  {{ info2 | safe }} </pre>
+            </div>
+            <div class="col-md-6 result-container" id="conclusion">
+                <div class="result-title">Conclusion</div>
+                    <pre class="sizelim"> {{ conc | safe }} </pre>
+            </div>
+        </div>
+        <form action="/price_comp" method="POST" id="compareButton">
+            <div class="text-center">
+                <button class="price-btn" onclick="pricecomparator()">Price Comparator</button>
+            </div>
+        </form>
+</div>
+</div>
+
+<script>
+
+    function compareProducts() {
+
+        document.getElementById("result1").style.display = "block";
+        document.getElementById("result2").style.display = "block";
+        document.getElementById("price-btn").style.display = "block";
+        /*document.getElementById("price1").style.display = "block";
+        document.getElementById("price2").style.display = "block";*/
+        document.getElementById("conclusion").style.display = "block";
+    }
+
+    function pricecomparator() {
+        document.getElementById("price1").style.display = "block";
+        document.getElementById("price2").style.display = "block";
+        /*document.getElementById("conclusion").style.display = "block";*/
+    }
+</script>
+
+
+</body>
+</html>
