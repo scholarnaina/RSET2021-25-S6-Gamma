@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="static/landingStyle.css">
+    <!-- Include the Toastify CSS file -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        .custom-toast {
+            border-radius: 5px;
+        }
+
+        /* Hide elements after successful login or signup */
+        .logged-in {
+            display: none;
+        }
+    </style>
+    <title>VoiceVIVA| Login & Registration</title>
+</head>
+
+<body>
+    <div class="wrapper" id="wrapper">
+        <nav class="nav">
+            <div class="nav-button">
+                <div class="main">
+                    <div class="logo">
+                        <img src="static/pics/logo.png" alt="logo" class="logo">
+                    </div>
+                </div>
+                <div class="butalig logged-out">
+                    <a href="/logout">
+                        <button class="btn white-btn" id="logoutBtn">Logout</button>
+                    </a>
+                    <i class='bx bxs-user-circle' onclick="profile()"></i>
+                </div>
+            </div>
+        </nav>
+
+        <div id="profiles" style="display: none;">
+            <p>You are {{email}}</p>
+        </div>
+
+    </div>
+    <div class="new">
+        <h2 class="newheading">Upload Your Image</h2>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" id="trying" name="image" accept="image/*" required><br><br>
+            <button type="submit" id="upload">Upload</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        var email = "{{ email }}";
+        console.log("Email:", email);
+
+        function profile() {
+            document.getElementById('profiles').style.display = 'block';
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            // Display the Toastify message after page load
+            if ("{{ message }}" == "Login Successfull!" || "{{ message }}" == "Registration Successfull!") { // Check for null instead of None
+                Toastify({
+                    text: "{{message}}",
+                    className: "custom-toast", // Apply your custom class here
+                    duration: 3000,
+                    gravity: "top",
+                    position: "center",
+                    backgroundColor: "linear-gradient(to right, #28a745, #218838)"
+                }).showToast();
+
+                // Hide elements after successful login or signup
+                document.querySelectorAll('.logged-out').forEach(element => {
+                    element.style.display = 'none';
+                });
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="static/landingStyle.css">
+    <link rel="stylesheet" type="text/css" href="static/leaderBoard.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <!-- Include the Toastify CSS file -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        .custom-toast {
+            border-radius: 5px;
+        }
+    </style>
+    <script src="static/landingScript.js"></script>
+    <title>VoiceVIVA| Login & Registration</title>
+</head>
+
+<body>
+    <div class="wrapper" id="wrapper">
+        <nav class="nav">
+
+            <div class="nav-button">
+                <div class="main">
+                    <dir class="logo">
+                        <img src="static/pics/logo.png" alt="logo" class="logo">
+                    </dir>
+                </div>
+
+
+                <div class="butalig">
+                    {% if email %}
+                    <a href="/logout">
+                        <button class="btn white-btn" id="logoutBtn">Logout</button>
+                    </a>
+                    {% else %}
+                    <a href="/login">
+                        <button class="btn white-btn" id="loginBtn">Sign In</button>
+                    </a>
+                    <a href="/signup">
+                        <button class="btn white-btn" id="registerBtn">Sign Up</button>
+                    </a>
+                    {% endif %}
+
+                    {% if email %}
+                    <a href="/landing" id="homeref" style="display: none;">
+                        <button class="btn white-btn" id="HomeBtn">Home</button>
+                    </a>
+                    <i class='bx bxs-user-circle profile'></i>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="nav-menu-btn">
+                <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+            </div>
+        </nav>
+
+        <div class="homephead">
+            <h1>Welcome to VoiceVIVA-Oral-VIVA</h1>
+        </div>
+
+        <div class="wrapper">
+            <div class="wrapper2 fade-in">
+                <div class="transition" style="display: block;">
+                    <div class="homepage active">
+                        <p>VoiceVIVA is an interactive website aimed to develop an innovative system for conducting VIVA
+                            (oral
+                            examination) questions
+                        </p>
+                    </div>
+                    <div class="homep2">
+
+                        <p>Utilizing audio input for answers from the user, which are then converted into text format
+                            for
+                            verification against an
+                            answer key.</p>
+                    </div>
+
+                    <div class="homep3">
+
+                        <p>This system offers a novel approach to assessing comprehension and knowledge
+                            retention.</p>
+                    </div>
+
+                    <div class="homep4">
+
+                        <p>Let's get started</p>
+                    </div>
+                </div>
+                <div class="nav-button btn2">
+                    {% if email %}
+                    <a href="/practice">
+                        <button class="btn white-btn" id="practiceBtn">Practice</button>
+                    </a>
+                    <a href="/camera">
+                        <button class="btn white-btn" id="testBtn">Test</button>
+                    </a>
+                    {% else %}
+                    <button class="btn white-btn" id="disabledBtn"
+                        onclick="alert('Please Sign in to start <3')">Start</button>
+                    {% endif %}
+                </div>
+
+            </div>
+            <div id="profiles" style="display: none;">
+                <p>You are {{email}}</p>
+                <div class="leaderBoard2">
+                    <div class="table">
+                        <div class="header">
+                            <div class="cell">DATE</div>
+                            <div class="cell">SCORE</div>
+                            <div class="cell">TIME</div>
+                            <div class="cell">RANK</div>
+                        </div>
+                        <div class=tableRows>
+                            <div class="row">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="leaderBoard2">
+                    <canvas id="myChart" style="width:100%;height:400px;margin-top: 15px;margin-right: 10px;"></canvas>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+            databaseURL: "YOUR_FIREBASE_DATABASE_URL",
+            projectId: "YOUR_FIREBASE_PROJECT_ID",
+            storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_FIREBASE_SENDER_ID",
+            appId: "YOUR_FIREBASE_APP_ID"
+        };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+
+        import { getDatabase, set, get, query, update, remove, ref, child, orderByChild, orderByKey }
+            from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js"
+
+        const db = getDatabase();
+
+        var email = "{{ email }}";
+        console.log("Email:", email);
+        let xValues = [];
+        let yValues = [];
+
+
+        window.addEventListener('DOMContentLoaded', function () {
+            // Display the Toastify message after page load
+            if ("{{ message }}" == "Login Successfull!" || "{{ message }}" == "Registration Successfull!") { // Check for null instead of None
+                Toastify({
+                    text: "{{message}}",
+                    className: "custom-toast", // Apply your custom class here
+                    duration: 3000,
+                    gravity: "top",
+                    position: "center",
+                    backgroundColor: "linear-gradient(to right, #28a745, #218838)"
+                }).showToast();
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const prof = document.querySelector(".profile");
+            prof.addEventListener("click", profile);
+
+            function profile() {
+                document.querySelector('.wrapper2').style.display = 'none';
+                document.querySelector('.homephead').style.display = 'none';
+                document.getElementById('profiles').style.display = 'block';
+                document.getElementById('homeref').style.display = 'block';
+            }
+            if (email !== null) {
+                document.querySelector('.transition').style.display = 'none';
+                document.querySelector('.btn2').style.marginTop = '40px';
+            }
+            const tableRows = document.querySelector(".tableRows");
+
+
+            function findData() {
+                const dbRef = ref(db);
+                let uname;
+
+                return get(child(dbRef, 'People'))
+                    .then((students) => {
+                        students.forEach(std => {
+                            let key = std.key;
+                            let value = std.val();
+
+                            if (value.Email == email) {
+                                uname = value.Username
+                                name = value.Name
+                            }
+                        });
+                        console.log(uname, name)
+
+                        return uname; // Moved inside the then block
+                    })
+                    .catch(error => {
+                        console.error("Error fetching data: ", error);
+                    });
+            }
+
+
+
+            let index = 0
+
+            function displayData(snapshot, resolve) {
+                let rank = 1;
+
+                function addRowWithDelay() {
+                    if (index < snapshot.length) {
+                        const childSnapshot = snapshot[index];
+                        const user = childSnapshot.val();
+                        const row = document.createElement("div");
+                        row.classList.add("row");
+
+                        row.classList.add("animation");
+
+                        row.innerHTML = `
+                <div class="cell">${user.Date}</div>
+                <div class="cell">${user.Score}</div>
+                <div class="cell">${user.Time}</div>
+                <div class="cell">${user.Rank}</div>
+            `;
+                        tableRows.appendChild(row);
+                        yValues.push(user.Score);
+
+                        row.addEventListener("mouseenter", function () {
+                            row.classList.add("glow");
+                        });
+
+                        row.addEventListener("mouseleave", function () {
+                            row.classList.remove("glow");
+                        });
+                        index++
+                        setTimeout(addRowWithDelay, 100); // Add next row after 1 second
+                    } else {
+                        console.log(index);
+                        // Resolve the promise after displaying data and updating index
+                        resolve(index);
+                    }
+                }
+
+                addRowWithDelay();
+            }
+
+            function fetchAndDisplayData(uname) {
+                return new Promise((resolve, reject) => {
+                    const usersRef = query(ref(db, uname), orderByKey());
+                    let index = 0; // Initialize index here
+                    get(usersRef)
+                        .then(snapshot => {
+                            if (snapshot.exists()) {
+                                const dataArray = [];
+                                snapshot.forEach(childSnapshot => {
+                                    dataArray.push(childSnapshot);
+                                });
+                                const reversedArray = dataArray.reverse();
+                                displayData(reversedArray, resolve); // Pass resolve function
+                            } else {
+                                console.log("No data available");
+                                reject("No data available");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error fetching data: ", error);
+                            reject(error);
+                        });
+                });
+            }
+
+            let unamePromise = findData();
+            unamePromise.then((uname) => {
+                console.log("Username: ", uname);
+                fetchAndDisplayData(uname).then((index) => { // Wait for fetchAndDisplayData to finish
+                    console.log("Index: ", index);
+                    let yValues2 = yValues.reverse();
+                    let xValues2 = [];
+                    for (let i = 1; i <= index; i++) {
+                        xValues2.push(i);
+                    }
+                    new Chart("myChart", {
+                        type: "line",
+                        data: {
+                            labels: xValues2,
+                            datasets: [{
+                                backgroundColor: "rgba(0,0,255,0.2)",
+                                borderColor: "rgba(0,0,255,1)",
+                                data: yValues2,
+                                label: 'Score'
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Tests'
+                                    }
+                                }],
+                                yAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Score'
+                                    }
+                                }]
+                            }
+                        }
+                    });
+
+                });
+            });
+
+
+
+
+
+            // fetchAndDisplayData(uname);
+        });
+
+
+    </script>
+
+</body>
+
+</html>

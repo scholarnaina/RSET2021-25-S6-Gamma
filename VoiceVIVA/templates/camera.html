@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="static/landingStyle.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <!-- Include the Toastify CSS file -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        .custom-toast {
+            border-radius: 5px;
+        }
+    </style>
+    <title>VoiceVIVA| Login & Registration</title>
+</head>
+
+<div class="wrapper" id="wrapper">
+    <nav class="nav">
+        <div class="nav-button">
+            <div class="main">
+                <dir class="logo">
+                    <img src="static/pics/logo.png" alt="logo" class="logo">
+                </dir>
+            </div>
+    </nav>
+
+    <div class="homephead">
+        <h1>Verifying your identity...</h1><br>
+    </div>
+
+    <div class="wrapper">
+        <div class="wrapper2 fade-in">
+            <div>
+                <div class="homepage active">
+                    <p>Please align your face directly with the camera</p>
+                </div>
+            </div>
+            <div class="nav-button btn2" style="display: none;">
+                <a href="/camera">
+                    <button class="btn white-btn" id="practiceBtn">Try Again</button>
+                </a>
+                <a href="/landing">
+                    <button class="btn white-btn" id="testBtn">Home</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+            databaseURL: "YOUR_FIREBASE_DATABASE_URL",
+            projectId: "YOUR_FIREBASE_PROJECT_ID",
+            storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_FIREBASE_SENDER_ID",
+            appId: "YOUR_FIREBASE_APP_ID"
+    };
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+
+    import { getDatabase, set, get, query, update, remove, ref, child, orderByChild, orderByKey }
+        from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js"
+
+    const db = getDatabase();
+
+    var email = "{{ email }}";
+    console.log("Email:", email);
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        function findData() {
+            const dbRef = ref(db);
+            let uname;
+
+            return get(child(dbRef, 'People'))
+                .then((students) => {
+                    students.forEach(std => {
+                        let key = std.key;
+                        let value = std.val();
+
+                        if (value.Email == email) {
+                            uname = value.Username
+                            name = value.Name
+                        }
+                    });
+                    console.log(uname, name)
+
+                    return uname; // Moved inside the then block
+                })
+                .catch(error => {
+                    console.error("Error fetching data: ", error);
+                });
+        }
+
+        function faceDetection() {
+            fetch('/face_detection')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.name1);
+                    if (data.name1 == name) {
+                        window.location.href = '/test';
+                    }
+                    else {
+                        document.querySelector('.homephead').innerHTML = '<h1>Could not verify your identity</h1>';
+                        document.querySelector('.homepage').style.display = "none"
+                        document.querySelector('.btn2').style.marginTop = '40px';
+                        document.querySelector('.btn2').style.display = "block";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        findData();
+        faceDetection();
+    });
+
+</script>
+
+</body>
+
+</html>

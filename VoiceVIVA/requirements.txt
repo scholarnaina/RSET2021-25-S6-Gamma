@@ -1,0 +1,9 @@
+Flask
+spacy
+nltk
+scikit-learn
+PyMuPDF
+pyttsx3
+transformers
+face_recognition
+opencv-python

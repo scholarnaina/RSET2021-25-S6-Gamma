@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="static/loginStyle.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <span class="icon-close">
+            <i class='bx bx-x'></i>
+        </span>
+        <div class="form-box register">
+            <h1>Login</h1>
+            <form action="" method="post" id="People">
+
+                <div class="input-box" id="registerEmail">
+                    <input type="text" id="emailInp" name="emailInp" placeholder="Email" required>
+                    <i class='bx bx-envelope'></i>
+                </div>
+                <div class="input-box" id="registerPassword">
+                    <input type="password" id="passwordInp" name="passwordInp" placeholder="Password" required>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox">I agree to the terms
+                        & conditions</label>
+                </div>
+
+                <button type="submit" class="btn">Login</button>
+
+                <div class="login-link">
+                    <p>Do not have an account? <a href="/signup">Register</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from
+            "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getDatabase, get, ref, child } from
+            "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
+        import { getAuth, signInWithEmailAndPassword } from
+            "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+        // these are the build-in functions for firebase
+        const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+            databaseURL: "YOUR_FIREBASE_DATABASE_URL",
+            projectId: "YOUR_FIREBASE_PROJECT_ID",
+            storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_FIREBASE_SENDER_ID",
+            appId: "YOUR_FIREBASE_APP_ID"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+        const auth = getAuth(app);
+        const dbref = ref(db);
+
+        let EmailInp = document.getElementById('emailInp');
+        let PassInp = document.getElementById('passwordInp');
+        let People = document.getElementById('People');
+
+        let SignInUser = evt => {
+            evt.preventDefault();
+            signInWithEmailAndPassword(auth, EmailInp.value, PassInp.value)
+                .then((credentials) => {
+                    fetch('/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email: EmailInp.value })
+                    })
+                        // Successful login handling
+                        .then(response => response.text())
+                        .then(data => {
+                            console.log("valid credentials");
+
+                            window.location.href = '/landing';
+                        })
+
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                })
+                .catch((error) => {
+                    // Use Toastify to show an error message
+                    Toastify({
+                        text: error.message,
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
+                    }).showToast();
+                    console.error("Login error:", error);
+                });
+        };
+
+        document.addEventListener("DOMContentLoaded", function () {
+            People.addEventListener('submit', SignInUser);
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</body>
+
+</html>
