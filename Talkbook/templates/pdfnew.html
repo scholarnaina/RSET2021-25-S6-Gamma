@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Converter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style6.css') }}">
+    <style>
+        input[type="file"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">TALKBOOK</div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/socials">Socials</a></li>
+        </ul>
+    </nav>
+
+    <div class="buttons">
+        <iframe id="pdfViewer" src="" width="600" height="400" frameborder="0"></iframe>
+        <br>
+        <input type="file" id="pdfInput" accept=".pdf" class="custom-file-input">
+        <button id="btnUpload">Upload</button>
+        <button id="btnConvert">Convert</button>
+        <button id="btnClear">Clear</button>
+        <audio id="audioPlayer" controls style="display: none;"></audio> <!-- Hidden audio player -->
+    </div>
+
+    <script>
+        const pdfInput = document.getElementById('pdfInput');
+        const pdfViewer = document.getElementById('pdfViewer');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const btnUpload = document.getElementById('btnUpload');
+        const btnConvert = document.getElementById('btnConvert');
+        const btnClear = document.getElementById('btnClear');
+
+        btnUpload.addEventListener('click', () => {
+            pdfInput.click();
+        });
+
+        pdfInput.addEventListener('change', () => {
+            const file = pdfInput.files[0];
+            const fileReader = new FileReader();
+            fileReader.onload = () => {
+                // Display PDF in iframe
+                pdfViewer.src = fileReader.result;
+            };
+            fileReader.readAsDataURL(file);
+        });
+
+        btnConvert.addEventListener('click', () => {
+            const file = pdfInput.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    audioPlayer.src = url; // Set audio source to the generated audio file
+                    audioPlayer.style.display = 'block'; // Show the audio player
+                    audioPlayer.play(); // Play the audio
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert('Please upload a PDF file.');
+            }
+        });
+
+        btnClear.addEventListener('click', () => {
+            pdfInput.value = '';
+            pdfViewer.src = '';
+            audioPlayer.pause(); // Pause the audio player
+            audioPlayer.style.display = 'none'; // Hide the audio player
+        });
+    </script>
+</body>
+</html>
