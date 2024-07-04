@@ -1,0 +1,200 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0px;
+  box-sizing: border-box;
+}
+
+.login-button {
+  background-color: #800080;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.signup-link {
+  margin-top: 10px;
+  display: block;
+  text-decoration: none;
+  color: #800080;
+}
+
+.eye {
+  position: relative;
+  left: 333px;
+  bottom: 52px;
+  font-size: 30px;
+  color: #800080;
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+}
+
+.eye-black {
+  color: black;
+}
+body {
+}
+
+#date {
+  top: 330px;
+}
+
+.banner-img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+}
+
+.ticktype {
+  width: auto;
+  height: fit-content;
+  text-align: center;
+  margin-top: 0.75px;
+
+  padding: 10px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for separation */
+}
+
+.ticktype p {
+  padding: 10px;
+}
+
+.venue img {
+  height: 600px;
+  width: auto;
+}
+
+.bidlist {
+  display: grid;
+  grid-template-rows: repeat(100, 1fr);
+  gap: 1px;
+  background-color: aquamarine;
+}
+
+.bid {
+  width: 30%;
+}
+
+.bidlist-cell {
+  width: 100%;
+  height: 3px;
+  background-color: #ccc;
+}
+
+.bid p {
+  color: black;
+  font-weight: bold;
+}
+
+.buy {
+  margin-left: 50px;
+  margin-top: 50px;
+  overflow: hidden;
+  display: flex;
+}
+
+.bottom_view2 {
+  display: flex;
+}
+
+/* view1 */
+.venue1 {
+  text-align: center; /* Center the seat container */
+}
+
+.seat-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px; /* Adjust the gap between seats */
+  margin-bottom: 10px;
+}
+
+.seat {
+  width: 40px; /* Adjust seat width */
+  height: 40px; /* Adjust seat height */
+  background-color: lightgray; /* Default seat color */
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.seat.selectable {
+  background-color: lightblue; /* Color for selectable seats */
+}
+
+.seat.selected {
+  background-color: rgb(0, 116, 155); /* Color for selected seats */
+  color: white; /* Text color for selected seats */
+}
+
+.seat.selectedp {
+  background-color: goldenrod; /* Color for selected seats */
+  color: white; /* Text color for selected seats */
+}
+
+.seat.premium {
+  background-color: gold; /* Color for premium seats */
+  color: black; /* Text color for premium seats */
+}
+
+.seat.booked {
+  background-color: red; /* Color for seats with non-null f_owner */
+  color: white; /* Text color for seats with non-null f_owner */
+}
+
+.venue {
+  width: 70%;
+  height: 900px;
+  float: right;
+  background-color: white;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  gap: 15px;
+}
+.venue {
+  display: grid;
+  grid-template-rows: auto auto; /* Adjust row heights as needed */
+  grid-template-areas:
+    "seats"
+    "stage";
+}
+
+.seat-container {
+  grid-area: seats;
+}
+
+.stage {
+  grid-area: stage;
+  margin-top: 20px;
+  color: silver;
+  margin-inline-start: 40%;
+}
+/* view1 */
