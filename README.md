@@ -1,7 +1,1 @@
-# S6 Mini project of RSET 2021-25 Gamma batch
-This is the official repository to store code done by CSE Gamma students during S6.
-
-## Disclaimer
-remove all api keys and email passwords with text explaining what has to be added in it's place.
-
-eg.secretkey = enter key here
+SmartGist is an application that aims to generate a PDF containing all relevant information related to each topic contained in an input PDF provided by the user.The subtopics are identified within the input PDF and extracted using keyword extraction methods. Then these identified subtopics are searched for in the other reference materials provided by the user.The contents under each subtopic is gathered for summarization.A new PDF is generated with the summarized content.This application aggregates summarized content from specified reference materials making it easy for users.They can avoid referencing multiple reference materials simultaneously.The app employs advanced natural language processing (NLP) techniques to identify and extract subtopics,employs cross document search,summarizes the content and generates a new PDF.The summarized PDF serves as a consolidated resource, eliminating the need to manually sift through multiple documents.The app provides a user-friendly interface for users to upload and select PDF documents. The backend, developed in Python, serves as a critical component for keyword extraction, summarization, and the generation of the new PDF. It communicates with the Flutter frontend to receive user inputs and deliver processed results. The Python backend relies on specific libraries such as NLTK for natural language processing tasks,Flask for handling HTTP requests and firebase to store and handle user details and document data.

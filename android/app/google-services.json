@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "245435050851",
+    "project_id": "smartgist-c2320",
+    "storage_bucket": "smartgist-c2320.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245435050851:android:d89ddb719fbd90a0e20156",
+        "android_client_info": {
+          "package_name": "com.example.smart_gist"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmBtfRUpR5cGJ7jWFfTBoGO0VFcMnNn4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
